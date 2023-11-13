@@ -1,0 +1,59 @@
+type Persona @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  nombre: String
+  apellidoPaterno: String
+  apellidoMaterno: String
+  parentesco: String
+  Estudiante: Estudiante @hasOne
+}
+
+type Carrera @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  nombre: String
+  Estudiante: [Estudiante] @hasMany(indexName: "byCarrera", fields: ["id"])
+}
+
+type Especialidad @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  nombre: String
+  Estudiante: [Estudiante] @hasMany(indexName: "byEspecialidad", fields: ["id"])
+}
+
+type Bachillerato @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  nombre: String
+  Estudiantes: [Estudiante] @hasMany(indexName: "byBachillerato", fields: ["id"])
+}
+
+type Domicilio @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  calle: String
+  numero: String
+  colonia: String
+  ciudad: String
+  codigoPostal: String
+  Estudiante: [Estudiante] @hasMany(indexName: "byDomicilio", fields: ["id"])
+}
+
+type Estudiante @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  matricula: String
+  nombre: String
+  apellidoPaterno: String
+  apellidoMaterno: String
+  telefonoCasa: String
+  telefonoJoven: String
+  telefonoTutor: String
+  correo: String
+  promedioBachillerato: Float
+  fechaRegistro: String
+  fotoEstudiante: String
+  certificadoBachillerato: String
+  comprobateDomicilio: String
+  claveMatricula: String
+  carreraID: ID! @index(name: "byCarrera")
+  especialidadID: ID! @index(name: "byEspecialidad")
+  bachilleratoID: ID! @index(name: "byBachillerato")
+  domicilioID: ID! @index(name: "byDomicilio")
+}
+ 
