@@ -12,6 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { ThemeProvider, createTheme } from "@mui/material";
 //Importaciones de paginas
 import Apps from './App';
+import LoginEstudiantes from './pages/perfil-Estudiante/LoginEstudiantes';
 
 I18n.putVocabularies(translations);
 I18n.setLanguage('es');
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Apps />,
+  },
+  {
+    path: "/login-estudiante",
+    element: <LoginEstudiantes/>,
   },
 ]);
 
