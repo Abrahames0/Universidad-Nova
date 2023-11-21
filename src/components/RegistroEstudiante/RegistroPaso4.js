@@ -6,8 +6,9 @@ import { CarreraAcursar} from "../../models";
 
 import { TextField, Card, Autocomplete, Button, Grid } from "@mui/material";
 
-function RegistroPaso4({ empContacto, infAcademica, setInfAcademica}) {
+function RegistroPaso4({ empContacto, infAcademica, setInfAcademica , setStep4Valid}) {
   const [optionsBachi, setOptionsBachi] = useState([]);
+
 
   console.log(infAcademica);
 
@@ -54,6 +55,8 @@ function RegistroPaso4({ empContacto, infAcademica, setInfAcademica}) {
                     ...prevState,
                     carreraAcursar: newValue
                   }));
+
+                  setStep4Valid(!!newValue);
                 }}
                 renderInput={(params) => (
                   <TextField {...params} label="Carrera que deseas cursar" variant="outlined" />

@@ -27,6 +27,7 @@ export default function DomicilioCreateForm(props) {
     colonia: "",
     ciudad: "",
     codigoPostal: "",
+    estado: "",
   };
   const [calle, setCalle] = React.useState(initialValues.calle);
   const [numero, setNumero] = React.useState(initialValues.numero);
@@ -35,6 +36,7 @@ export default function DomicilioCreateForm(props) {
   const [codigoPostal, setCodigoPostal] = React.useState(
     initialValues.codigoPostal
   );
+  const [estado, setEstado] = React.useState(initialValues.estado);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setCalle(initialValues.calle);
@@ -42,6 +44,7 @@ export default function DomicilioCreateForm(props) {
     setColonia(initialValues.colonia);
     setCiudad(initialValues.ciudad);
     setCodigoPostal(initialValues.codigoPostal);
+    setEstado(initialValues.estado);
     setErrors({});
   };
   const validations = {
@@ -50,6 +53,7 @@ export default function DomicilioCreateForm(props) {
     colonia: [],
     ciudad: [],
     codigoPostal: [],
+    estado: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -82,6 +86,7 @@ export default function DomicilioCreateForm(props) {
           colonia,
           ciudad,
           codigoPostal,
+          estado,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -141,6 +146,7 @@ export default function DomicilioCreateForm(props) {
               colonia,
               ciudad,
               codigoPostal,
+              estado,
             };
             const result = onChange(modelFields);
             value = result?.calle ?? value;
@@ -169,6 +175,7 @@ export default function DomicilioCreateForm(props) {
               colonia,
               ciudad,
               codigoPostal,
+              estado,
             };
             const result = onChange(modelFields);
             value = result?.numero ?? value;
@@ -197,6 +204,7 @@ export default function DomicilioCreateForm(props) {
               colonia: value,
               ciudad,
               codigoPostal,
+              estado,
             };
             const result = onChange(modelFields);
             value = result?.colonia ?? value;
@@ -225,6 +233,7 @@ export default function DomicilioCreateForm(props) {
               colonia,
               ciudad: value,
               codigoPostal,
+              estado,
             };
             const result = onChange(modelFields);
             value = result?.ciudad ?? value;
@@ -253,6 +262,7 @@ export default function DomicilioCreateForm(props) {
               colonia,
               ciudad,
               codigoPostal: value,
+              estado,
             };
             const result = onChange(modelFields);
             value = result?.codigoPostal ?? value;
@@ -266,6 +276,35 @@ export default function DomicilioCreateForm(props) {
         errorMessage={errors.codigoPostal?.errorMessage}
         hasError={errors.codigoPostal?.hasError}
         {...getOverrideProps(overrides, "codigoPostal")}
+      ></TextField>
+      <TextField
+        label="Estado"
+        isRequired={false}
+        isReadOnly={false}
+        value={estado}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              calle,
+              numero,
+              colonia,
+              ciudad,
+              codigoPostal,
+              estado: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.estado ?? value;
+          }
+          if (errors.estado?.hasError) {
+            runValidationTasks("estado", value);
+          }
+          setEstado(value);
+        }}
+        onBlur={() => runValidationTasks("estado", estado)}
+        errorMessage={errors.estado?.errorMessage}
+        hasError={errors.estado?.hasError}
+        {...getOverrideProps(overrides, "estado")}
       ></TextField>
       <Flex
         justifyContent="space-between"

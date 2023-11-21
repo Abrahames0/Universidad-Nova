@@ -5,11 +5,16 @@ import { SeleccionBachillerato, SeleccioCarrera } from "../../models";
 import { TextField, Card, Autocomplete, Button, Grid, InputAdornment } from "@mui/material";
 import { TbCloudUpload } from "react-icons/tb";
 
-function RegistroPaso2({empAcademica, setEmpAcademica}) {
+function RegistroPaso2({empAcademica, setEmpAcademica, setStep2Valid}) {
   console.log(empAcademica);
   const [pdfURL, setPdfURL] = useState(null);
   const [optionsBachi, setOptionsBachi] = useState([]);
   const [optionsEspe, setOptionsEspe] = useState([]);
+  const [validFields, setValidFields] = useState({
+    nombresBachillerato: false,
+    especialidadCursada: false,
+    promedio: false
+  });
 
   useEffect(() => {
     const fetchOptions = async () => {
@@ -24,6 +29,7 @@ function RegistroPaso2({empAcademica, setEmpAcademica}) {
     };
 
     fetchOptions();
+    
   }, []);
 
   const handleChangePromedio = (event) => {
@@ -38,9 +44,25 @@ function RegistroPaso2({empAcademica, setEmpAcademica}) {
           ...prev,
           promedio: value
         }));
-      }
+        setValidFields((prev) => ({
+          ...prev,
+          promedio: true,
+          especialidadCursada: true,
+          nombresBachillerato:true
+        }));
+      }else {
+        setValidFields((prev) => ({
+          ...prev,
+          promedio: false,
+        }))
     }
-  };  
+  } else {
+    setValidFields((prev) => ({
+      ...prev,
+      promedio: false,
+    }));
+  }
+};  
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
@@ -49,6 +71,15 @@ function RegistroPaso2({empAcademica, setEmpAcademica}) {
     const uploadedUrl = 'https://universidad-nova-storage05757-prod.s3.amazonaws.com/public/pdf/'; // Obtén esta URL de tu servicio de carga de archivos
     setPdfURL(uploadedUrl);
   };
+
+  useEffect(() => {
+    const isFormValid =
+      validFields.nombresBachillerato &&
+      validFields.especialidadCursada &&
+      validFields.promedio;
+    
+    setStep2Valid(isFormValid);
+  }, [validFields, setStep2Valid]);
 
   return (
     <div className="row justify-content-center">

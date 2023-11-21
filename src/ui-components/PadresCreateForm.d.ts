@@ -29,6 +29,7 @@ export declare type PadresCreateFormInputValues = {
     nombrePa?: string;
     apellidoPaternoPa?: string;
     apellidoMaternoPa?: string;
+    telefonoPa?: string;
 };
 export declare type PadresCreateFormValidationValues = {
     nombreMa?: ValidationFunction<string>;
@@ -38,6 +39,7 @@ export declare type PadresCreateFormValidationValues = {
     nombrePa?: ValidationFunction<string>;
     apellidoPaternoPa?: ValidationFunction<string>;
     apellidoMaternoPa?: ValidationFunction<string>;
+    telefonoPa?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type PadresCreateFormOverridesProps = {
@@ -49,6 +51,7 @@ export declare type PadresCreateFormOverridesProps = {
     nombrePa?: PrimitiveOverrideProps<TextFieldProps>;
     apellidoPaternoPa?: PrimitiveOverrideProps<TextFieldProps>;
     apellidoMaternoPa?: PrimitiveOverrideProps<TextFieldProps>;
+    telefonoPa?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type PadresCreateFormProps = React.PropsWithChildren<{
     overrides?: PadresCreateFormOverridesProps | undefined | null;

@@ -30,6 +30,7 @@ export default function PadresUpdateForm(props) {
     nombrePa: "",
     apellidoPaternoPa: "",
     apellidoMaternoPa: "",
+    telefonoPa: "",
   };
   const [nombreMa, setNombreMa] = React.useState(initialValues.nombreMa);
   const [apellidoPaternoMa, setApellidoPaternoMa] = React.useState(
@@ -46,6 +47,7 @@ export default function PadresUpdateForm(props) {
   const [apellidoMaternoPa, setApellidoMaternoPa] = React.useState(
     initialValues.apellidoMaternoPa
   );
+  const [telefonoPa, setTelefonoPa] = React.useState(initialValues.telefonoPa);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = padresRecord
@@ -58,6 +60,7 @@ export default function PadresUpdateForm(props) {
     setNombrePa(cleanValues.nombrePa);
     setApellidoPaternoPa(cleanValues.apellidoPaternoPa);
     setApellidoMaternoPa(cleanValues.apellidoMaternoPa);
+    setTelefonoPa(cleanValues.telefonoPa);
     setErrors({});
   };
   const [padresRecord, setPadresRecord] = React.useState(padresModelProp);
@@ -79,6 +82,7 @@ export default function PadresUpdateForm(props) {
     nombrePa: [],
     apellidoPaternoPa: [],
     apellidoMaternoPa: [],
+    telefonoPa: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -113,6 +117,7 @@ export default function PadresUpdateForm(props) {
           nombrePa,
           apellidoPaternoPa,
           apellidoMaternoPa,
+          telefonoPa,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -175,6 +180,7 @@ export default function PadresUpdateForm(props) {
               nombrePa,
               apellidoPaternoPa,
               apellidoMaternoPa,
+              telefonoPa,
             };
             const result = onChange(modelFields);
             value = result?.nombreMa ?? value;
@@ -205,6 +211,7 @@ export default function PadresUpdateForm(props) {
               nombrePa,
               apellidoPaternoPa,
               apellidoMaternoPa,
+              telefonoPa,
             };
             const result = onChange(modelFields);
             value = result?.apellidoPaternoMa ?? value;
@@ -237,6 +244,7 @@ export default function PadresUpdateForm(props) {
               nombrePa,
               apellidoPaternoPa,
               apellidoMaternoPa,
+              telefonoPa,
             };
             const result = onChange(modelFields);
             value = result?.apellidoMaternoMa ?? value;
@@ -269,6 +277,7 @@ export default function PadresUpdateForm(props) {
               nombrePa,
               apellidoPaternoPa,
               apellidoMaternoPa,
+              telefonoPa,
             };
             const result = onChange(modelFields);
             value = result?.telefonoMa ?? value;
@@ -299,6 +308,7 @@ export default function PadresUpdateForm(props) {
               nombrePa: value,
               apellidoPaternoPa,
               apellidoMaternoPa,
+              telefonoPa,
             };
             const result = onChange(modelFields);
             value = result?.nombrePa ?? value;
@@ -329,6 +339,7 @@ export default function PadresUpdateForm(props) {
               nombrePa,
               apellidoPaternoPa: value,
               apellidoMaternoPa,
+              telefonoPa,
             };
             const result = onChange(modelFields);
             value = result?.apellidoPaternoPa ?? value;
@@ -361,6 +372,7 @@ export default function PadresUpdateForm(props) {
               nombrePa,
               apellidoPaternoPa,
               apellidoMaternoPa: value,
+              telefonoPa,
             };
             const result = onChange(modelFields);
             value = result?.apellidoMaternoPa ?? value;
@@ -376,6 +388,37 @@ export default function PadresUpdateForm(props) {
         errorMessage={errors.apellidoMaternoPa?.errorMessage}
         hasError={errors.apellidoMaternoPa?.hasError}
         {...getOverrideProps(overrides, "apellidoMaternoPa")}
+      ></TextField>
+      <TextField
+        label="Telefono pa"
+        isRequired={false}
+        isReadOnly={false}
+        value={telefonoPa}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              nombreMa,
+              apellidoPaternoMa,
+              apellidoMaternoMa,
+              telefonoMa,
+              nombrePa,
+              apellidoPaternoPa,
+              apellidoMaternoPa,
+              telefonoPa: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.telefonoPa ?? value;
+          }
+          if (errors.telefonoPa?.hasError) {
+            runValidationTasks("telefonoPa", value);
+          }
+          setTelefonoPa(value);
+        }}
+        onBlur={() => runValidationTasks("telefonoPa", telefonoPa)}
+        errorMessage={errors.telefonoPa?.errorMessage}
+        hasError={errors.telefonoPa?.hasError}
+        {...getOverrideProps(overrides, "telefonoPa")}
       ></TextField>
       <Flex
         justifyContent="space-between"

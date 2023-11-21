@@ -27,6 +27,7 @@ export declare type DomicilioCreateFormInputValues = {
     colonia?: string;
     ciudad?: string;
     codigoPostal?: string;
+    estado?: string;
 };
 export declare type DomicilioCreateFormValidationValues = {
     calle?: ValidationFunction<string>;
@@ -34,6 +35,7 @@ export declare type DomicilioCreateFormValidationValues = {
     colonia?: ValidationFunction<string>;
     ciudad?: ValidationFunction<string>;
     codigoPostal?: ValidationFunction<string>;
+    estado?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type DomicilioCreateFormOverridesProps = {
@@ -43,6 +45,7 @@ export declare type DomicilioCreateFormOverridesProps = {
     colonia?: PrimitiveOverrideProps<TextFieldProps>;
     ciudad?: PrimitiveOverrideProps<TextFieldProps>;
     codigoPostal?: PrimitiveOverrideProps<TextFieldProps>;
+    estado?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type DomicilioCreateFormProps = React.PropsWithChildren<{
     overrides?: DomicilioCreateFormOverridesProps | undefined | null;

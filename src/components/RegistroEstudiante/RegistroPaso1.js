@@ -8,7 +8,7 @@ import { Button, TextField, Card, Grid, Snackbar, Alert } from "@mui/material";
 import Direcciones from "./Direccion";
 import { VisuallyHiddenInput } from "@chakra-ui/visually-hidden";
 
-function RegistroUsuarioInformacion({ imagenURL, setImagenURL, empContacto, setEmpContacto, empUbicacion, setEmpUbicacion}) {
+function RegistroUsuarioInformacion({ imagenURL, setImagenURL, empContacto, setEmpContacto, empUbicacion, setEmpUbicacion, setStep1Valid}) {
 
   console.log(empContacto);
   console.log(empUbicacion);
@@ -47,13 +47,27 @@ function RegistroUsuarioInformacion({ imagenURL, setImagenURL, empContacto, setE
       }
     }
 
+
+
     setEmpContacto((past) => ({
       ...past,
       [name]: event.target.value,
       error: { ...past.error, [name]: error },
       help: { ...past.help, [name]: help },
     }));
+    const hasInfo = inputs.some((input) => input.value.trim() !== '');  
+
+      if (hasInfo) {
+      const allFieldsValid = inputs.every((input) => !input.error);
+
+      if (allFieldsValid) {
+        setStep1Valid(true);
+      } else {
+        setStep1Valid(false);
+      }
+    }
   };
+  
 
   const inputs = [
     {
@@ -136,7 +150,7 @@ function RegistroUsuarioInformacion({ imagenURL, setImagenURL, empContacto, setE
       setSnackbarSeverity('error');
       setOpenSnackbar(true);
     }
-  };
+  }
 
   return (
 

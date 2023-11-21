@@ -313,6 +313,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "telefonoPa": {
+                    "name": "telefonoPa",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -422,6 +429,13 @@ export const schema = {
                             "domicilioID"
                         ]
                     }
+                },
+                "estado": {
+                    "name": "estado",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -642,5 +656,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "0a75e674f406441f62238131d5bc516b"
+    "version": "a859203961d4fd7e165195f2bd61287d"
 };
