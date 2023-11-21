@@ -5,13 +5,11 @@ import { Auth, Storage } from "aws-amplify";
 import { TbCloudUpload } from "react-icons/tb";
 
 import { Button, TextField, Card, Grid, Snackbar, Alert } from "@mui/material";
-import Direcciones from "./Direccion";
 import { VisuallyHiddenInput } from "@chakra-ui/visually-hidden";
 
-function RegistroUsuarioInformacion({ comprobateDomicilioPDF, setComprobateDomicilioPDF, imagenURL, setImagenURL, empContacto, setEmpContacto, empUbicacion, setEmpUbicacion, setStep1Valid}) {
+function RegistroUsuarioInformacion({ imagenURL, setImagenURL, empContacto, setEmpContacto, setStep1Valid}) {
 
   console.log(empContacto);
-  console.log(empUbicacion);
 
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -47,8 +45,6 @@ function RegistroUsuarioInformacion({ comprobateDomicilioPDF, setComprobateDomic
       }
     }
 
-
-
     setEmpContacto((past) => ({
       ...past,
       [name]: event.target.value,
@@ -67,7 +63,6 @@ function RegistroUsuarioInformacion({ comprobateDomicilioPDF, setComprobateDomic
       }
     }
   };
-  
 
   const inputs = [
     {
@@ -151,7 +146,6 @@ function RegistroUsuarioInformacion({ comprobateDomicilioPDF, setComprobateDomic
       setOpenSnackbar(true);
     }
   }
-
   return (
 
 <div style={{ padding: '1rem' }}>
@@ -212,7 +206,6 @@ function RegistroUsuarioInformacion({ comprobateDomicilioPDF, setComprobateDomic
           </Grid>
         </Grid>
       </Grid>
-      <Direcciones comprobateDomicilioPDF={comprobateDomicilioPDF} setComprobateDomicilioPDF={setComprobateDomicilioPDF}  empUbicacion={empUbicacion} setEmpUbicacion={setEmpUbicacion}/>
     </Grid>
   </Form>
   <Snackbar

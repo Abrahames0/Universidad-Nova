@@ -6,18 +6,16 @@ import RegistroPaso3 from './RegistroPaso3';
 import RegistroPaso4 from './RegistroPaso4';
 import { Estudiante, Padres, Domicilio } from '../../models';
 import { DataStore } from 'aws-amplify';
-
+import Direcciones from './RegistroPasoDomicilio';
 
 export const StepperRegistro = () => {
     const [activeStep, setActiveStep] = useState(0);
     //Estados de Validacion de Pasos
     const [step1Valid, setStep1Valid] = useState(false);
+    const [stepValid, setStepValid] = useState(false);
     const [step2Valid, setStep2Valid] = useState(false);
     const [step3Valid, setStep3Valid] = useState(false);
     const [step4Valid, setStep4Valid] = useState(false);
-    const [openSnackbar, setOpenSnackbar] = useState(false);
-    const [snackbarMessage, setSnackbarMessage] = useState('');
-    const [snackbarSeverity, setSnackbarSeverity] = useState('success');
 
     const [userEmail] = useState("");
 
@@ -148,7 +146,7 @@ export const StepperRegistro = () => {
         }
     };
 
-    const steps = ['Paso 1', 'Paso 2', 'Paso 3', 'Paso 4'];
+    const steps = ['Paso 1', 'paso 2', 'Paso 3', 'Paso 4', 'Paso 5'];
 
     const handleNext = async () => {
         if (activeStep === steps.length - 1) {
@@ -158,7 +156,7 @@ export const StepperRegistro = () => {
                 const padresGuardados = await guardarPadres();
                 const direccionGuardada = await guardarDireccion();
     
-                if (estudianteGuardado && padresGuardados && direccionGuardada) {
+                if (direccionGuardada && estudianteGuardado && padresGuardados ) {
                     // Todo se guardó correctamente
                     console.log("Datos guardados correctamente");
                     // Aquí puedes redirigir al usuario o mostrar un mensaje de éxito
@@ -172,22 +170,21 @@ export const StepperRegistro = () => {
                 // Manejo del error
             }
         } else {
-            // No es el último paso, simplemente pasa al siguiente paso
-            if (activeStep === 0 && !step1Valid) {
+            if (activeStep === 1 && !stepValid) {
                 console.log("Complete el fomrulario del paso 1");
                 return;
             }
-            if (activeStep === 1 && !step2Valid) {
+            if (activeStep === 2 && !step2Valid) {
                 // Mostrar mensaje de validación para el paso 2
                 console.log("Complete el fomrulario del paso 2");
                 return;
             }
-            if (activeStep === 2 && !step3Valid) {
+            if (activeStep === 3 && !step3Valid) {
                 // Mostrar mensaje de validación para el paso 3
                 console.log("Complete el fomrulario del paso 3");
                 return;
             }
-            if (activeStep === 3 && !step4Valid) {
+            if (activeStep === 4 && !step4Valid) {
                 // Mostrar mensaje de validación para el paso 3
                 console.log("Complete el fomrulario del paso 4");
                 return;
@@ -203,12 +200,14 @@ export const StepperRegistro = () => {
     const getStepContent = (stepIndex) => {
         switch (stepIndex) {
             case 0:
-                return <RegistroPaso1 comprobateDomicilioPDF={comprobateDomicilioPDF} setComprobateDomicilioPDF={setComprobateDomicilioPDF} imagenURL={imagenURL} setImagenURL={setImagenURL} empUbicacion={empUbicacion} setEmpUbicacion={setEmpUbicacion} empContacto={empContacto} setEmpContacto={setEmpContacto} setStep1Valid={setStep1Valid}/>;
+                return <RegistroPaso1 imagenURL={imagenURL} setImagenURL={setImagenURL} empContacto={empContacto} setEmpContacto={setEmpContacto} setStep1Valid={setStep1Valid}/>;
             case 1:
-                return <RegistroPaso2 certificadoPDF={certificadoPDF} setCertificadoPDF={setCertificadoPDF} empAcademica={empAcademica} setEmpAcademica={setEmpAcademica} setStep2Valid={setStep2Valid} />;
+                return <Direcciones setStep1Valid={setStepValid} comprobateDomicilioPDF={comprobateDomicilioPDF} setComprobateDomicilioPDF={setComprobateDomicilioPDF} empUbicacion={empUbicacion} setEmpUbicacion={setEmpUbicacion}/>;
             case 2:
-                return <RegistroPaso3 empPadres={empPadres} setEmpPadres={setEmpPadres} setStep3Valid={setStep3Valid}/>;
+                return <RegistroPaso2 certificadoPDF={certificadoPDF} setCertificadoPDF={setCertificadoPDF} empAcademica={empAcademica} setEmpAcademica={setEmpAcademica} setStep2Valid={setStep2Valid} />;
             case 3:
+                return <RegistroPaso3 empPadres={empPadres} setEmpPadres={setEmpPadres} setStep3Valid={setStep3Valid}/>;
+            case 4:
                 return <RegistroPaso4 empContacto={empContacto} infAcademica={infAcademica} setInfAcademica={setInfAcademica} setStep4Valid={setStep4Valid}/>;
             default:
                 return 'Paso desconocido';

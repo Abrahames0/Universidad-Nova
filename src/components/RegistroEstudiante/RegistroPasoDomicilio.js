@@ -1,4 +1,4 @@
-/* import { Alert, Autocomplete, Button, Grid, Snackbar, TextField } from "@mui/material";
+import { Alert, Autocomplete, Button, Grid, Snackbar, TextField } from "@mui/material";
 import { DataStore, Storage } from "aws-amplify";
 import { useEffect, useState } from "react";
 import {SeleccionableCiudad} from '../../models';
@@ -50,11 +50,11 @@ const validaciones = {
   },
 };
 
-const Direcciones = ({comprobateDomicilioPDF, setComprobateDomicilioPDF, empUbicacion, setEmpUbicacion }) => {
+const Direcciones = ({ setStep1Valid, comprobateDomicilioPDF, setComprobateDomicilioPDF, empUbicacion, setEmpUbicacion }) => {
   const [optionsDire, setOptionsDire] = useState([]);
-  const [openSnack, setopenSnack] = useState(false);
+  const [openSnack, setOpenSnack] = useState(false);
   const [snackbarMessag, setsnackbarMessag] = useState('');
-  const [snackbarSeverit, setsnackbarSeverit] = useState('success');
+  const [snackbarSeverit, setSnackbarSeverit] = useState('success');
 
   useEffect(() => {
     const fetchOptions = async () => {
@@ -86,6 +86,17 @@ const Direcciones = ({comprobateDomicilioPDF, setComprobateDomicilioPDF, empUbic
       error: { ...past.error, [name]: error },
       help: { ...past.help, [name]: help },
     }));
+    const hasInfo = inputs.some((input) => input.value.trim() !== '');  
+
+    if (hasInfo) {
+    const allFieldsValid = inputs.every((input) => !input.error);
+
+    if (allFieldsValid) {
+      setStep1Valid(true);
+    } else {
+      setStep1Valid(false);
+    }
+    }
   };
 
   const handleBlur = (e) => {
@@ -149,35 +160,53 @@ const Direcciones = ({comprobateDomicilioPDF, setComprobateDomicilioPDF, empUbic
       value: empUbicacion.estado,
     }
   ];
-
+  
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
   
     if (file) {
-      const fileType = file.type;
+      try {
+        const fileType = file.type;
+        let folder = "";
   
-      // Verifica el tipo de archivo y maneja la carga según el tipo
-      if (fileType === "application/pdf") {
-        // Manejar la carga de un archivo PDF
-      } else if (fileType.startsWith("image/")) {
-        // Manejar la carga de una imagen (cualquier tipo de imagen)
-      } else {
-        // Tipo de archivo no válido, muestra un mensaje de error
-        setsnackbarMessag('Formato de archivo no soportado');
-        setsnackbarSeverit('error');
-        setopenSnack(true);
-        return;
+        if (fileType === "application/pdf") {
+          folder = "pdf/";
+        } else if (fileType === "image/png") {
+          folder = "images/";
+        } else {
+          setsnackbarMessag('Formato de archivo no soportado');
+          setSnackbarSeverit('error');
+          setOpenSnack(true);
+          return;
+        }
+  
+        const fileName = `${folder}${Date.now()}-${file.name}`;
+        await Storage.put(fileName, file, {
+          level: 'public',
+          contentType: file.type
+        });
+  
+        const uploadedUrl = `https://universidad-nova-storage05757-prod.s3.amazonaws.com/public/${fileName}`;
+        // Aquí establece la URL donde corresponda, dependiendo de si es un PDF o un PNG
+        setComprobateDomicilioPDF(uploadedUrl);
+  
+        setsnackbarMessag(`Archivo ${fileType === "application/pdf" ? 'PDF' : 'PNG'} cargado exitosamente`);
+        setSnackbarSeverit('success');
+        setOpenSnack(true);
+      } catch (error) {
+        console.error('Error al cargar el archivo:', error);
+  
+        setsnackbarMessag('Error al guardar el archivo');
+        setSnackbarSeverit('error');
+        setOpenSnack(true);
       }
-  
-      // Resto del código para cargar el archivo
     } else {
       setsnackbarMessag('No se seleccionó ningún archivo');
-      setsnackbarSeverit('error');
-      setopenSnack(true);
+      setSnackbarSeverit('error');
+      setOpenSnack(true);
     }
-  };
+  };   
   
-
   return (
     <div className="row justify-content-center">
             <div className="col-xs-12 col-sm-8 col-md-7 col-lg-6">
@@ -252,11 +281,11 @@ const Direcciones = ({comprobateDomicilioPDF, setComprobateDomicilioPDF, empUbic
       <Snackbar
         open={openSnack}
         autoHideDuration={6000}
-        onClose={() => setopenSnack(false)}
+        onClose={() => setOpenSnack(false)}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <Alert
-          onClose={() => setopenSnack(false)}
+          onClose={() => setOpenSnack(false)}
           severity={snackbarSeverit}
           sx={{ width: '100%' }}
         >
@@ -268,4 +297,4 @@ const Direcciones = ({comprobateDomicilioPDF, setComprobateDomicilioPDF, empUbic
   );
 };
 
-export default Direcciones; */
+export default Direcciones;
