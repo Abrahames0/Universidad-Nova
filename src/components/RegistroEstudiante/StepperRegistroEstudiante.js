@@ -6,9 +6,11 @@ import RegistroPaso3 from './RegistroPaso3';
 import RegistroPaso4 from './RegistroPaso4';
 import { Estudiante, Padres, Domicilio } from '../../models';
 import { DataStore } from 'aws-amplify';
+import { useNavigate } from 'react-router-dom';
 import Direcciones from './RegistroPasoDomicilio';
 
 export const StepperRegistro = () => {
+    const navigate= useNavigate();
     const [activeStep, setActiveStep] = useState(0);
     //Estados de Validacion de Pasos
     const [step1Valid, setStep1Valid] = useState(false);
@@ -88,7 +90,8 @@ export const StepperRegistro = () => {
         try {
             const domicilioID = await guardarDireccion();
             if (domicilioID) {
-                await guardarProducto(domicilioID);  // Aquí pasas el domicilioID
+                await guardarProducto(domicilioID);  // Aquí pasas el domicilioID   
+                navigate('/vista-alumnos'); 
                 // ... Resto del código
             } else {
                 console.error("Error al guardar la dirección");
@@ -100,7 +103,6 @@ export const StepperRegistro = () => {
     
     
     const guardarProducto = async (domicilioID) => {
-        console.log(empContacto.imagenURL);
         try {
           const estudiante = new Estudiante({
             domicilioID: domicilioID,
@@ -152,6 +154,7 @@ export const StepperRegistro = () => {
         if (activeStep === steps.length - 1) {
             // Es el último paso, ejecuta las funciones de guardado
             try {
+                navigate('/vista-alumnos')
                 const estudianteGuardado = await guardarProducto();
                 const padresGuardados = await guardarPadres();
                 const direccionGuardada = await guardarDireccion();
