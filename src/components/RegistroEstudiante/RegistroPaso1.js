@@ -197,7 +197,7 @@ function RegistroUsuarioInformacion({ comprobateDomicilioPDF, setComprobateDomic
                         Cargar
                       </Button>
                       <VisuallyHiddenInput
-                        accept="image/*,application/pdf"
+                        accept="image/*"
                         id="icon-button-file"
                         type="file"
                         onChange={handleImageUpload}

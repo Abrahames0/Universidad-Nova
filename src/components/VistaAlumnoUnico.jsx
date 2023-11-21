@@ -22,7 +22,6 @@ function VistaAlumnoUnico() {
         }
       } catch (error) {
         console.error('Error al cargar la información del estudiante:', error);
-        // Aquí podrías establecer algún estado para mostrar un mensaje de error en la UI
       }
     };
 
@@ -75,22 +74,19 @@ function VistaAlumnoUnico() {
                   Correo: {estudiante.correo}
                 </Typography>
                 <Typography variant="body1">
-                  Teléfono de casa: {/* Si tienes esta información, colócala aquí */}
-                </Typography>
-                <Typography variant="body1">
                   Teléfono propio: {estudiante.telefonoJoven}
                 </Typography>
                 <Typography variant="body1">
-                  Bachillerato de procedencia: {/* Si tienes esta información, colócala aquí */}
+                  Bachillerato de procedencia: {estudiante.bachilleratoProcedencia}
                 </Typography>
                 <Typography variant="body1">
                   Promedio del Bachillerato: {estudiante.promedioBachillerato}
                 </Typography>
                 <Typography variant="body1">
-                  Especialidad del Bachillerato: {/* Si tienes esta información, colócala aquí */}
+                  Especialidad del Bachillerato: {estudiante.especialidadProveniente}
                 </Typography>
                 <Typography variant="body1">
-                  Carrera: {/* Si tienes esta información, colócala aquí */}
+                  Carrera: {estudiante.carreraDeseada}
                 </Typography>
               </CardContent>
             </Card>
