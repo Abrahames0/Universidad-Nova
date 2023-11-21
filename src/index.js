@@ -4,12 +4,10 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 //Importaciones AWS
 import awsconfig from './aws-exports';
-import { translations } from '@aws-amplify/ui-react';
-import { Amplify, Auth, AuthModeStrategyType, I18n } from 'aws-amplify';
+import { Amplify, Auth, AuthModeStrategyType} from 'aws-amplify';
 //Importaciones Estilo
 import "./index.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { ThemeProvider, createTheme } from "@mui/material";
 //Importaciones de paginas
 import LoginEstudiantes from './pages/perfil-Estudiante/LoginEstudiantes';
 import Inicio from './pages/inicio-Principal/Inicio';
@@ -39,7 +37,7 @@ Auth.configure(awsconfig);
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#deeceb',
+      main: '#5d4fc6',
     },
   },
 
