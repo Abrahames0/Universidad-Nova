@@ -55,9 +55,10 @@ const handleDeleteClick = async (row) => {
     <AppBar />
     <div style={{backgroundColor:"gray", height: "100vh", width: "100vw"}} >
         <div className='container' >
+              <h2 style={{color:"white"}}>Tabla de Alumnos Registrados</h2>
             <div className='d-flex justity-content-center'>
             <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>ID</TableCell>

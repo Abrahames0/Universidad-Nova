@@ -14,14 +14,17 @@ function VistaAlumnoUnico({ student }) {
   }, [])
   
   return (
+    
     <>
     <div>
     <AppBar/>
     </div>
+    &nbsp;
+    &nbsp;
     <div className='container' >
     <Grid container spacing={4} className='d-flex justify-content-center' >
       <Grid item xs={8}>
-        <Card>
+        <Card variant="outlined">
           <CardContent>
             <Typography variant="h5" gutterBottom>
               Foto de Perfil
@@ -31,7 +34,7 @@ function VistaAlumnoUnico({ student }) {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card variant="outlined">
           <CardContent >
             <Typography variant="h5" gutterBottom>
               Información del Estudiante
