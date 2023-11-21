@@ -11,7 +11,7 @@ import { Button, CardContent, Grid, Typography, CardActions } from '@mui/materia
 function App() {
   const navigate=useNavigate();
 
-  const handleSignOut = async () => { // Agrega la palabra clave async aquí
+  const handleSignOut = async () => {
     try {
       navigate('/login-estudiante');
     } catch (error) {

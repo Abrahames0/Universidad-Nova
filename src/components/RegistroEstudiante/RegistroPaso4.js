@@ -110,53 +110,7 @@ function RegistroPaso4() {
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                    <TextField
-                        label="Promedio Bachillerato"
-                        variant="outlined"
-                        value={promedio}
-                        onChange={handleChange}
-                        type="number"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        inputProps={{
-                            step: "0.01", 
-                            min: "0", 
-                            max: "10", 
-                        }}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <Autocomplete
-                    options={optionsEspe}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Especialidad cursada" variant="outlined" />
-                    )}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                <TextField
-                    label="Certificado de bachillerato"
-                    size="normal"
-                    margin="normal"
-                    placeholder="Carga certificado de bachillerato"
-                    value={imagenURL ? imagenURL : ""}
-                    InputProps={{
-                    endAdornment: (
-                        <label htmlFor="icon-button-file">
-                        <Button component="span" variant="contained" startIcon={<TbCloudUpload />}
-                            sx={{ backgroundColor: '#deeceb','&:hover': {backgroundColor: '#deeceb'}}}>
-                            Cargar
-                        </Button>
-                        {/* <VisuallyHiddenInput
-                            accept="image/*" id="icon-button-file" type="file" onChange={handleImageUpload} /> */}
-                        </label>
-                    ),
-                    }}
-                    fullWidth
-                    InputLabelProps={{ shrink: true }}
-                    disabled
-                />
+                
                 </Grid>
             </Grid>
             </Form>

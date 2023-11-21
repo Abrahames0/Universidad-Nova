@@ -1,0 +1,14 @@
+{
+  "resourceName": "s3universidadnovastorage",
+  "bucketName": "universidad-nova-storage",
+  "policyUUID": "9f492d0d",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ]
+}

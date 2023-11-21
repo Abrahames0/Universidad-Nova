@@ -1,4 +1,7 @@
-import { Card, TextField } from "@mui/material";
+import { Autocomplete, Card, TextField } from "@mui/material";
+import { DataStore } from "aws-amplify";
+import { useEffect, useState } from "react";
+import {CarreraAcursar} from '../../models';
 
 const validaciones = {
   codigoPostal: {
@@ -47,6 +50,21 @@ const validaciones = {
 };
 
 const Direcciones = ({ empUbicacion, setEmpUbicacion }) => {
+  const [optionsDire, setOptionsDire] = useState([]);
+
+  useEffect(() => {
+    const fetchOptions = async () => {
+      try {
+        const items = await DataStore.query(CarreraAcursar);
+        setOptionsDire(items.map(item => item.carreraAcursar));
+      } catch (error) {
+        console.error('Error al obtener datos', error);
+      }
+    };
+
+    fetchOptions();
+  }, []);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     let newValue = value
@@ -119,15 +137,6 @@ const Direcciones = ({ empUbicacion, setEmpUbicacion }) => {
     },
     {
       id: 5,
-      label:"Municipio",
-      name: "municipio",
-      validations: {maxLength: 150 },
-      error: empUbicacion.error?.municipio,
-      helperText: empUbicacion.help?.municipio,
-      value: empUbicacion.municipio,
-    },
-    {
-      id: 6,
       label:"Estado",
       name: "estado",
       validations: {maxLength: 150 },
@@ -162,6 +171,12 @@ const Direcciones = ({ empUbicacion, setEmpUbicacion }) => {
                 />
           </div>
         ))}
+        <Autocomplete
+          options={optionsDire}
+          renderInput={(params) => (
+              <TextField {...params} label="Ciudad de origen " variant="outlined" />
+          )}
+        />
       </div>
       </div>
     </div>

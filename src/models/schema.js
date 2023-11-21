@@ -1,5 +1,64 @@
 export const schema = {
     "models": {
+        "CarreraAcursar": {
+            "name": "CarreraAcursar",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "carreraAcursar": {
+                    "name": "carreraAcursar",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "CarreraAcursars",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "SeleccioCarrera": {
             "name": "SeleccioCarrera",
             "fields": {
@@ -177,8 +236,8 @@ export const schema = {
                 }
             ]
         },
-        "Persona": {
-            "name": "Persona",
+        "Padres": {
+            "name": "Padres",
             "fields": {
                 "id": {
                     "name": "id",
@@ -187,29 +246,22 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "nombre": {
-                    "name": "nombre",
+                "nombreMa": {
+                    "name": "nombreMa",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
-                "apellidoPaterno": {
-                    "name": "apellidoPaterno",
+                "apellidoPaternoMa": {
+                    "name": "apellidoPaternoMa",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
-                "apellidoMaterno": {
-                    "name": "apellidoMaterno",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "parentesco": {
-                    "name": "parentesco",
+                "apellidoMaternoMa": {
+                    "name": "apellidoMaternoMa",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -229,241 +281,37 @@ export const schema = {
                             "id"
                         ],
                         "targetNames": [
-                            "personaEstudianteId"
+                            "padresEstudianteId"
                         ]
                     }
                 },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "personaEstudianteId": {
-                    "name": "personaEstudianteId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                }
-            },
-            "syncable": true,
-            "pluralName": "Personas",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "allow": "public",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        "Carrera": {
-            "name": "Carrera",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "nombre": {
-                    "name": "nombre",
+                "telefonoMa": {
+                    "name": "telefonoMa",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
-                "Estudiante": {
-                    "name": "Estudiante",
-                    "isArray": true,
-                    "type": {
-                        "model": "Estudiante"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "carreraID"
-                        ]
-                    }
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "Carreras",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "allow": "public",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        "Especialidad": {
-            "name": "Especialidad",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "nombre": {
-                    "name": "nombre",
+                "nombrePa": {
+                    "name": "nombrePa",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
-                "Estudiante": {
-                    "name": "Estudiante",
-                    "isArray": true,
-                    "type": {
-                        "model": "Estudiante"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "especialidadID"
-                        ]
-                    }
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "Especialidads",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "allow": "public",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        "Bachillerato": {
-            "name": "Bachillerato",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "nombre": {
-                    "name": "nombre",
+                "apellidoPaternoPa": {
+                    "name": "apellidoPaternoPa",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
-                "Estudiantes": {
-                    "name": "Estudiantes",
-                    "isArray": true,
-                    "type": {
-                        "model": "Estudiante"
-                    },
+                "apellidoMaternoPa": {
+                    "name": "apellidoMaternoPa",
+                    "isArray": false,
+                    "type": "String",
                     "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "bachilleratoID"
-                        ]
-                    }
+                    "attributes": []
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -480,10 +328,17 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
+                },
+                "padresEstudianteId": {
+                    "name": "padresEstudianteId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
                 }
             },
             "syncable": true,
-            "pluralName": "Bachilleratoes",
+            "pluralName": "Padres",
             "attributes": [
                 {
                     "type": "model",
@@ -662,13 +517,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "telefonoTutor": {
-                    "name": "telefonoTutor",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "correo": {
                     "name": "correo",
                     "isArray": false,
@@ -711,39 +559,32 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "claveMatricula": {
-                    "name": "claveMatricula",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "carreraID": {
-                    "name": "carreraID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "especialidadID": {
-                    "name": "especialidadID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "bachilleratoID": {
-                    "name": "bachilleratoID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "domicilioID": {
                     "name": "domicilioID",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
+                    "attributes": []
+                },
+                "bachilleratoProcedencia": {
+                    "name": "bachilleratoProcedencia",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "especialidadProveniente": {
+                    "name": "especialidadProveniente",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "carreraDeseada": {
+                    "name": "carreraDeseada",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
                     "attributes": []
                 },
                 "createdAt": {
@@ -769,33 +610,6 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byCarrera",
-                        "fields": [
-                            "carreraID"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byEspecialidad",
-                        "fields": [
-                            "especialidadID"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byBachillerato",
-                        "fields": [
-                            "bachilleratoID"
-                        ]
-                    }
                 },
                 {
                     "type": "key",
@@ -828,5 +642,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "a11e07473a09002972ee399a6cf02d3f"
+    "version": "0a75e674f406441f62238131d5bc516b"
 };

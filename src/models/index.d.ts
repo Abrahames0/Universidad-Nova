@@ -6,6 +6,34 @@ import { LazyLoading, LazyLoadingDisabled, AsyncItem, AsyncCollection } from "@a
 
 
 
+type EagerCarreraAcursar = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<CarreraAcursar, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly carreraAcursar?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyCarreraAcursar = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<CarreraAcursar, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly carreraAcursar?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type CarreraAcursar = LazyLoading extends LazyLoadingDisabled ? EagerCarreraAcursar : LazyCarreraAcursar
+
+export declare const CarreraAcursar: (new (init: ModelInit<CarreraAcursar>) => CarreraAcursar) & {
+  copyOf(source: CarreraAcursar, mutator: (draft: MutableModel<CarreraAcursar>) => MutableModel<CarreraAcursar> | void): CarreraAcursar;
+}
+
 type EagerSeleccioCarrera = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<SeleccioCarrera, 'id'>;
@@ -90,132 +118,48 @@ export declare const SeleccionBachillerato: (new (init: ModelInit<SeleccionBachi
   copyOf(source: SeleccionBachillerato, mutator: (draft: MutableModel<SeleccionBachillerato>) => MutableModel<SeleccionBachillerato> | void): SeleccionBachillerato;
 }
 
-type EagerPersona = {
+type EagerPadres = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Persona, 'id'>;
+    identifier: ManagedIdentifier<Padres, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly nombre?: string | null;
-  readonly apellidoPaterno?: string | null;
-  readonly apellidoMaterno?: string | null;
-  readonly parentesco?: string | null;
+  readonly nombreMa?: string | null;
+  readonly apellidoPaternoMa?: string | null;
+  readonly apellidoMaternoMa?: string | null;
   readonly Estudiante?: Estudiante | null;
+  readonly telefonoMa?: string | null;
+  readonly nombrePa?: string | null;
+  readonly apellidoPaternoPa?: string | null;
+  readonly apellidoMaternoPa?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly personaEstudianteId?: string | null;
+  readonly padresEstudianteId?: string | null;
 }
 
-type LazyPersona = {
+type LazyPadres = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Persona, 'id'>;
+    identifier: ManagedIdentifier<Padres, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly nombre?: string | null;
-  readonly apellidoPaterno?: string | null;
-  readonly apellidoMaterno?: string | null;
-  readonly parentesco?: string | null;
+  readonly nombreMa?: string | null;
+  readonly apellidoPaternoMa?: string | null;
+  readonly apellidoMaternoMa?: string | null;
   readonly Estudiante: AsyncItem<Estudiante | undefined>;
+  readonly telefonoMa?: string | null;
+  readonly nombrePa?: string | null;
+  readonly apellidoPaternoPa?: string | null;
+  readonly apellidoMaternoPa?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly personaEstudianteId?: string | null;
+  readonly padresEstudianteId?: string | null;
 }
 
-export declare type Persona = LazyLoading extends LazyLoadingDisabled ? EagerPersona : LazyPersona
+export declare type Padres = LazyLoading extends LazyLoadingDisabled ? EagerPadres : LazyPadres
 
-export declare const Persona: (new (init: ModelInit<Persona>) => Persona) & {
-  copyOf(source: Persona, mutator: (draft: MutableModel<Persona>) => MutableModel<Persona> | void): Persona;
-}
-
-type EagerCarrera = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Carrera, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly nombre?: string | null;
-  readonly Estudiante?: (Estudiante | null)[] | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyCarrera = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Carrera, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly nombre?: string | null;
-  readonly Estudiante: AsyncCollection<Estudiante>;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type Carrera = LazyLoading extends LazyLoadingDisabled ? EagerCarrera : LazyCarrera
-
-export declare const Carrera: (new (init: ModelInit<Carrera>) => Carrera) & {
-  copyOf(source: Carrera, mutator: (draft: MutableModel<Carrera>) => MutableModel<Carrera> | void): Carrera;
-}
-
-type EagerEspecialidad = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Especialidad, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly nombre?: string | null;
-  readonly Estudiante?: (Estudiante | null)[] | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyEspecialidad = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Especialidad, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly nombre?: string | null;
-  readonly Estudiante: AsyncCollection<Estudiante>;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type Especialidad = LazyLoading extends LazyLoadingDisabled ? EagerEspecialidad : LazyEspecialidad
-
-export declare const Especialidad: (new (init: ModelInit<Especialidad>) => Especialidad) & {
-  copyOf(source: Especialidad, mutator: (draft: MutableModel<Especialidad>) => MutableModel<Especialidad> | void): Especialidad;
-}
-
-type EagerBachillerato = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Bachillerato, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly nombre?: string | null;
-  readonly Estudiantes?: (Estudiante | null)[] | null;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyBachillerato = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Bachillerato, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly nombre?: string | null;
-  readonly Estudiantes: AsyncCollection<Estudiante>;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type Bachillerato = LazyLoading extends LazyLoadingDisabled ? EagerBachillerato : LazyBachillerato
-
-export declare const Bachillerato: (new (init: ModelInit<Bachillerato>) => Bachillerato) & {
-  copyOf(source: Bachillerato, mutator: (draft: MutableModel<Bachillerato>) => MutableModel<Bachillerato> | void): Bachillerato;
+export declare const Padres: (new (init: ModelInit<Padres>) => Padres) & {
+  copyOf(source: Padres, mutator: (draft: MutableModel<Padres>) => MutableModel<Padres> | void): Padres;
 }
 
 type EagerDomicilio = {
@@ -268,18 +212,16 @@ type EagerEstudiante = {
   readonly apellidoMaterno?: string | null;
   readonly telefonoCasa?: string | null;
   readonly telefonoJoven?: string | null;
-  readonly telefonoTutor?: string | null;
   readonly correo?: string | null;
   readonly promedioBachillerato?: number | null;
   readonly fechaRegistro?: string | null;
   readonly fotoEstudiante?: string | null;
   readonly certificadoBachillerato?: string | null;
   readonly comprobateDomicilio?: string | null;
-  readonly claveMatricula?: string | null;
-  readonly carreraID: string;
-  readonly especialidadID: string;
-  readonly bachilleratoID: string;
   readonly domicilioID: string;
+  readonly bachilleratoProcedencia?: string | null;
+  readonly especialidadProveniente?: string | null;
+  readonly carreraDeseada?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -296,18 +238,16 @@ type LazyEstudiante = {
   readonly apellidoMaterno?: string | null;
   readonly telefonoCasa?: string | null;
   readonly telefonoJoven?: string | null;
-  readonly telefonoTutor?: string | null;
   readonly correo?: string | null;
   readonly promedioBachillerato?: number | null;
   readonly fechaRegistro?: string | null;
   readonly fotoEstudiante?: string | null;
   readonly certificadoBachillerato?: string | null;
   readonly comprobateDomicilio?: string | null;
-  readonly claveMatricula?: string | null;
-  readonly carreraID: string;
-  readonly especialidadID: string;
-  readonly bachilleratoID: string;
   readonly domicilioID: string;
+  readonly bachilleratoProcedencia?: string | null;
+  readonly especialidadProveniente?: string | null;
+  readonly carreraDeseada?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

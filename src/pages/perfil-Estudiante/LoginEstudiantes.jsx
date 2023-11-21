@@ -2,9 +2,6 @@
  import '@aws-amplify/ui-react/styles.css';
 
 function LoginEstudiante() {
-    <>
-    Hola
-    </>
 }
 
 

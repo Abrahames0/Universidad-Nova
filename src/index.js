@@ -11,9 +11,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //Importaciones de paginas
 import LoginEstudiantes from './pages/perfil-Estudiante/LoginEstudiantes';
 import Inicio from './pages/inicio-Principal/Inicio';
-import { StepperRegistro } from './components/RegistroEstudiante/StepperRegistroEstudiante';
+import StepperRegistro  from './components/RegistroEstudiante/StepperRegistroEstudiante';
 import { translations } from '@aws-amplify/ui-react';
 import { createTheme, ThemeProvider } from '@mui/material';
+import App from './App';
+import Registro from './pages/perfil-Estudiante/Registro';
 
 I18n.putVocabularies(translations);
 I18n.setLanguage('es');
@@ -39,7 +41,7 @@ Auth.configure(awsconfig);
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#5d4fc6',
+      main: '#deeceb',
     },
   },
 
@@ -49,7 +51,6 @@ const theme = createTheme({
     },
   },
 });
-
 
 const router = createBrowserRouter([
   {
@@ -62,11 +63,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/registro-estudiante",
-    element: <StepperRegistro/>
+    element: <Registro/>
   }
 ]);
 
-function App() {
+function Apps() {
   return (
     <ThemeProvider theme={theme}>
       <RouterProvider router={router} />
@@ -75,5 +76,5 @@ function App() {
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <App />
+  <Apps />
 );
