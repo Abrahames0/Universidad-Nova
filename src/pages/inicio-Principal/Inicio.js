@@ -16,7 +16,7 @@ const Inicio = () => {
     }
 
     return (
-        <div style={{ textAlign: 'center', marginTop: '20%' }}>
+        <div style={{ textAlign: 'center', marginTop: '10%' }}>
              <img src={Logo} alt="logo-nova" className="img-fluid logo-nova" />
             <h1>Bienvenido a la Universidad Nova</h1>
             <Button 
@@ -25,13 +25,23 @@ const Inicio = () => {
                 style={{ margin: '10px' }}
                 onClick={handleSignOut}
             >
-                Registro
+                Iniciar Registro
+            </Button>
+            <Button 
+                variant="contained" 
+                color="secondary" 
+                style={{ margin: '10px' }}
+                onClick={()=>{
+                  navigate('/vista-alumnos')
+                }}
+            >
+                Estudiantes
             </Button>
             <div className='container'>
           <Grid container spacing={3} justifyContent="center" style={{ marginTop: '2rem' }}>
           {/* Misión */}
           <Grid item xs={12} sm={6} md={4}>
-            <Card>
+            <Card variant="outlined">
               <CardContent>
                 <Typography variant="h5" className='typography' align="center">
                   Misión
@@ -44,7 +54,7 @@ const Inicio = () => {
           </Grid>
           {/* Visión */}
           <Grid item xs={12} sm={6} md={4}>
-            <Card>
+            <Card variant="outlined">
               <CardContent>
                 <Typography variant="h5" className='typography' align="center">
                   Visión
@@ -57,7 +67,7 @@ const Inicio = () => {
           </Grid>
           {/* Valores */}
           <Grid item xs={12} sm={6} md={4}>
-            <Card>
+            <Card variant="outlined">
               <CardContent>
                 <Typography variant="h5" className='typography' align="center">
                   Valores

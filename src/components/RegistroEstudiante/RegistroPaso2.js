@@ -5,10 +5,16 @@ import { SeleccionBachillerato, SeleccioCarrera } from "../../models";
 import { TextField, Card, Autocomplete, Button, Grid, InputAdornment, Snackbar, Alert } from "@mui/material";
 import { TbCloudUpload } from "react-icons/tb";
 
-function RegistroPaso2({certificadoPDF, setCertificadoPDF, empAcademica, setEmpAcademica}) {
+function RegistroPaso2({certificadoPDF, setCertificadoPDF, empAcademica, setEmpAcademica, setStep2Valid}) {
+
   console.log(empAcademica);
   const [optionsBachi, setOptionsBachi] = useState([]);
   const [optionsEspe, setOptionsEspe] = useState([]);
+  const [validFields, setValidFields] = useState({
+    nombresBachillerato: false,
+    especialidadCursada: false,
+    promedio: false
+  });
 
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -27,6 +33,7 @@ function RegistroPaso2({certificadoPDF, setCertificadoPDF, empAcademica, setEmpA
     };
 
     fetchOptions();
+    
   }, []);
 
   const handleChangePromedio = (event) => {
@@ -41,9 +48,25 @@ function RegistroPaso2({certificadoPDF, setCertificadoPDF, empAcademica, setEmpA
           ...prev,
           promedio: value
         }));
-      }
+        setValidFields((prev) => ({
+          ...prev,
+          promedio: true,
+          especialidadCursada: true,
+          nombresBachillerato:true
+        }));
+      }else {
+        setValidFields((prev) => ({
+          ...prev,
+          promedio: false,
+        }))
     }
-  };  
+  } else {
+    setValidFields((prev) => ({
+      ...prev,
+      promedio: false,
+    }));
+  }
+};  
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
@@ -90,6 +113,15 @@ function RegistroPaso2({certificadoPDF, setCertificadoPDF, empAcademica, setEmpA
       setOpenSnackbar(true);
     }
   };
+
+  useEffect(() => {
+    const isFormValid =
+      validFields.nombresBachillerato &&
+      validFields.especialidadCursada &&
+      validFields.promedio;
+    
+    setStep2Valid(isFormValid);
+  }, [validFields, setStep2Valid]);
 
   return (
     <div className="row justify-content-center">

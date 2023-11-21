@@ -11,7 +11,7 @@ async function EnviarCorreoHook(usuario) {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email: usuario.correo}),
+        body: JSON.stringify({ email: usuario.correo, matricula: usuario.matricula}),
       };
       const response = await fetch(url, requestOptions
       );
