@@ -13,10 +13,8 @@ import LoginEstudiantes from './pages/perfil-Estudiante/LoginEstudiantes';
 import VistaAlumnos from './components/VistaAlumnos';
 import VistaAlumnoUnico from './components/VistaAlumnoUnico';
 import Inicio from './pages/inicio-Principal/Inicio';
-import StepperRegistro  from './components/RegistroEstudiante/StepperRegistroEstudiante';
 import { translations } from '@aws-amplify/ui-react';
 import { createTheme, ThemeProvider } from '@mui/material';
-import App from './App';
 import Registro from './pages/perfil-Estudiante/Registro';
 
 I18n.putVocabularies(translations);
