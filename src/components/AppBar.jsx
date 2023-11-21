@@ -13,7 +13,7 @@
     const navigate= useNavigate();
     const isAdmin = userGroups && userGroups.includes('administrador');
     const isLeader = userGroups && userGroups.includes('supervisor');
-    console.log(isAdmin);
+  
     
     return (
       <Box sx={{ flexGrow: 1 }}>

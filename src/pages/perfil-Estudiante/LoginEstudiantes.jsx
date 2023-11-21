@@ -37,4 +37,6 @@ function LoginEstudiante() {
 }
 
 
-export default withAuthenticator(LoginEstudiante);
+export default withAuthenticator(LoginEstudiante,  {
+    initialState: 'signUp',
+  });
