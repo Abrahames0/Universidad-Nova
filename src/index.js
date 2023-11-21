@@ -11,6 +11,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //Importaciones de paginas
 import Apps from './App';
 import LoginEstudiantes from './pages/perfil-Estudiante/LoginEstudiantes';
+import VistaAlumnos from './components/VistaAlumnos';
+import VistaAlumnoUnico from './components/VistaAlumnoUnico';
 
 
 Amplify.configure({ ...awsconfig, DataStore: { authModeStrategyType: AuthModeStrategyType.MULTI_AUTH } });
@@ -26,6 +28,14 @@ const router = createBrowserRouter([
   {
     path: "/login-estudiante",
     element: <LoginEstudiantes/>,
+  },
+  {
+    path: "/vista-alumnos",
+    element: <VistaAlumnos/>,
+  },
+  {
+    path: "/vista-alumno-unico",
+    element: <VistaAlumnoUnico/>,
   },
 ]);
 

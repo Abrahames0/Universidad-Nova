@@ -4,6 +4,7 @@
   import Toolbar from '@mui/material/Toolbar';
   import Typography from '@mui/material/Typography';
   import Button from '@mui/material/Button';
+  
 
   import { useNavigate } from 'react-router-dom';
   import { Auth, DataStore } from 'aws-amplify';
@@ -22,8 +23,8 @@ import { Link } from '@mui/material';
     }
 
     return (
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <AppBar position="static"  >
           <Toolbar>
               <>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -33,6 +34,6 @@ import { Link } from '@mui/material';
           </Toolbar>
         </AppBar>
       </Box>
-    );
+    );  
     
   }
