@@ -14,7 +14,7 @@ import { Link } from '@mui/material';
     const navigate= useNavigate();
     const isAdmin = userGroups && userGroups.includes('administrador');
     const isLeader = userGroups && userGroups.includes('supervisor');
-    console.log(isAdmin);
+  
     
    
     const handleButtonClick = (route) => {

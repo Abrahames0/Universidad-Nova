@@ -70,10 +70,12 @@ const router = createBrowserRouter([
     path: "/vista-alumno-unico",
     element: <VistaAlumnoUnico/>,
   },
+  {
     path: "/registro-estudiante",
     element: <StepperRegistro/>
   }
 ]);
+
 
 function App() {
   return (

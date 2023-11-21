@@ -1,9 +1,18 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { Card, CardContent, Typography, Grid, Avatar, Button } from '@mui/material';
 import Footer from './Footer';
 import AppBar from './AppBar'
+import { useLocation } from 'react-router-dom';
 
-function VistaAlumnoUnico({ alumno }) {
+function VistaAlumnoUnico({ student }) {
+  const location = useLocation();
+  const alumno = new URLSearchParams(location.search);
+  const name = alumno.get('name');
+
+  useEffect(() => {  
+    console.log(name)
+  }, [])
+  
   return (
     <>
     <div>
@@ -23,17 +32,38 @@ function VistaAlumnoUnico({ alumno }) {
           </CardContent>
         </Card>
         <Card>
-          <CardContent>
+          <CardContent >
             <Typography variant="h5" gutterBottom>
               Información del Estudiante
             </Typography>
             <Typography variant="body1">
-              Nombre: Fernando
+              Nombre: {name}
             </Typography>
             <Typography variant="body1">
-              Edad: 12
+              Matrícula:
             </Typography>
             {/* Otras propiedades del estudiante */}
+            <Typography variant="body1">
+              Correo:
+            </Typography>
+            <Typography variant="body1">
+              Teléfono de casa:
+            </Typography>
+            <Typography variant="body1">
+              Teléfono propio:
+            </Typography>
+            <Typography variant="body1">
+              Bachillerato de procedencia
+            </Typography>
+            <Typography variant="body1">
+              Promedio del Bachillerato:
+            </Typography>
+            <Typography variant="body1">
+              Especialdiad del Bachiller:
+            </Typography>
+            <Typography variant="body1">
+              Carrera: 
+            </Typography>
           </CardContent>
         </Card>
       </Grid>
@@ -41,7 +71,7 @@ function VistaAlumnoUnico({ alumno }) {
       </Grid>
     </Grid>
     </div>
-    <Footer/>
+
     </>
   );
 }
