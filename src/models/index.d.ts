@@ -6,6 +6,90 @@ import { LazyLoading, LazyLoadingDisabled, AsyncItem, AsyncCollection } from "@a
 
 
 
+type EagerSeleccioCarrera = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<SeleccioCarrera, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly carrera?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazySeleccioCarrera = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<SeleccioCarrera, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly carrera?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type SeleccioCarrera = LazyLoading extends LazyLoadingDisabled ? EagerSeleccioCarrera : LazySeleccioCarrera
+
+export declare const SeleccioCarrera: (new (init: ModelInit<SeleccioCarrera>) => SeleccioCarrera) & {
+  copyOf(source: SeleccioCarrera, mutator: (draft: MutableModel<SeleccioCarrera>) => MutableModel<SeleccioCarrera> | void): SeleccioCarrera;
+}
+
+type EagerSeleccionableCiudad = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<SeleccionableCiudad, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly ciudad?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazySeleccionableCiudad = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<SeleccionableCiudad, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly ciudad?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type SeleccionableCiudad = LazyLoading extends LazyLoadingDisabled ? EagerSeleccionableCiudad : LazySeleccionableCiudad
+
+export declare const SeleccionableCiudad: (new (init: ModelInit<SeleccionableCiudad>) => SeleccionableCiudad) & {
+  copyOf(source: SeleccionableCiudad, mutator: (draft: MutableModel<SeleccionableCiudad>) => MutableModel<SeleccionableCiudad> | void): SeleccionableCiudad;
+}
+
+type EagerSeleccionBachillerato = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<SeleccionBachillerato, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly nombreBachillerato?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazySeleccionBachillerato = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<SeleccionBachillerato, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly nombreBachillerato?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type SeleccionBachillerato = LazyLoading extends LazyLoadingDisabled ? EagerSeleccionBachillerato : LazySeleccionBachillerato
+
+export declare const SeleccionBachillerato: (new (init: ModelInit<SeleccionBachillerato>) => SeleccionBachillerato) & {
+  copyOf(source: SeleccionBachillerato, mutator: (draft: MutableModel<SeleccionBachillerato>) => MutableModel<SeleccionBachillerato> | void): SeleccionBachillerato;
+}
+
 type EagerPersona = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<Persona, 'id'>;
