@@ -1,3 +1,18 @@
+type SeleccioCarrera @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  carrera: String
+}
+
+type SeleccionableCiudad @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  ciudad: String
+}
+
+type SeleccionBachillerato @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  nombreBachillerato: String
+}
+
 type Persona @model @auth(rules: [{allow: public}]) {
   id: ID!
   nombre: String

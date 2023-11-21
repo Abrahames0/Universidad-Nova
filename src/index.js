@@ -11,8 +11,9 @@ import "./index.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ThemeProvider, createTheme } from "@mui/material";
 //Importaciones de paginas
-import Apps from './App';
 import LoginEstudiantes from './pages/perfil-Estudiante/LoginEstudiantes';
+import Inicio from './pages/inicio-Principal/Inicio';
+import { StepperRegistro } from './components/RegistroEstudiante/StepperRegistroEstudiante';
 
 I18n.putVocabularies(translations);
 I18n.setLanguage('es');
@@ -38,7 +39,7 @@ Auth.configure(awsconfig);
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#5d4fc6',
+      main: '#deeceb',
     },
   },
 
@@ -52,12 +53,16 @@ const theme = createTheme({
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Apps />,
+    element: <Inicio />,
   },
   {
     path: "/login-estudiante",
     element: <LoginEstudiantes/>,
   },
+  {
+    path: "/registro-estudiante",
+    element: <StepperRegistro/>
+  }
 ]);
 
 function App() {
