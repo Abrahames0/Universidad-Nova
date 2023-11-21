@@ -72,7 +72,7 @@ const router = createBrowserRouter([
   {
     path: "/registro-estudiante",
     element: <Registro/>
-  }
+  },
 ]);
 
 

@@ -4,6 +4,7 @@ import { Typography,Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/AppBar";
 import {StepperRegistro} from "../../components/RegistroEstudiante/StepperRegistroEstudiante";
+
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import '@aws-amplify/ui-react/styles.css';
 

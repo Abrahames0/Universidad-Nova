@@ -1,27 +1,22 @@
 import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
-import { useNavigate } from "react-router-dom";
-
-import { Auth, DataStore } from "aws-amplify";
-
-import Swal from "sweetalert2";
+import { Auth, Storage } from "aws-amplify";
 
 import { TbCloudUpload } from "react-icons/tb";
 
-
-import { Button, TextField, Card, CardHeader, Grid } from "@mui/material";
+import { Button, TextField, Card, Grid, Snackbar, Alert } from "@mui/material";
 import Direcciones from "./Direccion";
+import { VisuallyHiddenInput } from "@chakra-ui/visually-hidden";
 
+function RegistroUsuarioInformacion({ imagenURL, setImagenURL, empContacto, setEmpContacto, empUbicacion, setEmpUbicacion}) {
 
-function RegistroUsuarioInformacion() {
-
-  const [imagenURL, setImagenURL] = useState(null);
+  console.log(empContacto);
+  console.log(empUbicacion);
 
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [snackbarSeverity, setSnackbarSeverity] = useState('success'); 
-  const navigate = useNavigate()
-
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+ 
   const handleChange = (event) => {
     const { name, value } = event.target;
     let error = false;
@@ -60,30 +55,15 @@ function RegistroUsuarioInformacion() {
     }));
   };
 
-  const [userEmail] = useState("");
-
-  const [empContacto, setEmpContacto] = useState({
-    nombreUsuario: '',
-    apellidoUsuario: '',
-    email: userEmail,
-    telefono: '',
-    error: {},
-    help: {}
-  });
-
-  const [empUbicacion, setEmpUbicacion] = useState({
-    calle: "", numero: "", colonia: "", codigoPostal: "", municipio: "", estado: "", pais:"",
-  })
-
   const inputs = [
     {
       id: 1,
       label: "Nombres",
-      name: "Nombres",
+      name: "nombres",
       validations: { maxLength: 250 },
-      error: empContacto?.error?.nombreUsuario,
-      helperText: empContacto.help?.nombreUsuario,
-      value: empContacto.nombreUsuario,
+      error: empContacto?.error?.nombres,
+      helperText: empContacto.help?.nombres,
+      value: empContacto.nombres,
     },
     
     {
@@ -91,18 +71,18 @@ function RegistroUsuarioInformacion() {
       label: "Apelledo Paterno",
       name: "apellidopaterno",
       validations: { maxLength: 250 },
-      error: empContacto?.error?.apellidoUsuario,
-      helperText: empContacto.help?.apellidoUsuario,
-      value: empContacto.apellidoUsuario,
+      error: empContacto?.error?.apellidopaterno,
+      helperText: empContacto.help?.apellidopaterno,
+      value: empContacto.apellidopaterno,
     },
     {
         id: 3,
         label: "Apelledo Materno",
         name: "apellidomaterno",
         validations: { maxLength: 250 },
-        error: empContacto?.error?.apellidoUsuario,
-        helperText: empContacto.help?.apellidoUsuario,
-        value: empContacto.apellidoUsuario,
+        error: empContacto?.error?.apellidomaterno,
+        helperText: empContacto.help?.apellidomaterno,
+        value: empContacto.apellidomaterno,
       },
     
     {
@@ -122,71 +102,14 @@ function RegistroUsuarioInformacion() {
     }
   ];
 
-  /* const validateField = (field, message) => {
-    if (!field || typeof field !== 'string' || field.trim() === '') {
-      Swal.fire({
-        icon: 'error',
-        title: message,
-        confirmButtonText: 'Aceptar',
-      })
-      return false
-    }
-    return true
-  } */
-
-  /* const validateFieldsForStepZero = () => {
-    const { nombreUsuario, apellidoUsuario, telefono, error } = empContacto;
-  
-    if (!validateField(nombreUsuario, 'El campo Nombre es requerido')) return false;
-    if (!validateField(apellidoUsuario, 'El campo Apellido es requerido')) return false;
-    if (!validateField(telefono, 'El campo Número de télefono es requerido')) return false;
-    if (error.nombreUsuario) {
-      Swal.fire({
-        icon: 'error',
-        title: '¡Ups! Hubo un problema',
-        html: '<p>Parece que hay un error en el campo <strong>nombre</strong></p>',
-        confirmButtonText: 'Aceptar',
-      });
-      return false;
-    }
-    if (error.apellidoUsuario) {
-      Swal.fire({
-        icon: 'error',
-        title: '¡Ups! Hubo un problema',
-        html: '<p>Parece que hay un error en el campo <strong>apellido</strong></p>',
-        confirmButtonText: 'Aceptar',
-      });
-      return false;
-    }
-    if (error.telefono) {
-      Swal.fire({
-        icon: 'error',
-        title: '¡Ups! Hubo un problema',
-        html: '<p>Parece que hay un error en el campo <strong>número de teléfono</strong></p>',
-        confirmButtonText: 'Aceptar',
-      });
-      return false;
-    }
-    return true;
-  }; */
-  
-  /* const validateFieldsForStepTwo = () => {
-    const fields = ['municipio', 'codigoPostal', 'colonia', 'calle', 'numero', 'estado', 'pais'];
-    for (let field of fields) {
-      if (!validateField(empUbicacion[field], `El campo ${field} es requerido`)) return false;
-    }
-    return true;
-  }; */
-  
-
-  /* useEffect(() => {
+  useEffect(() => {
     async function getCurrentUserEmail() {
       const userInfo = await Auth.currentUserInfo();
       const userEmail = userInfo.attributes.email;
       setEmpContacto((prevState) => ({ ...prevState, email: userEmail }));
     }
     getCurrentUserEmail();
-  }, []); */
+  }, []);
 
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
@@ -194,8 +117,8 @@ function RegistroUsuarioInformacion() {
     try {
       const fileName = 'img/' + file.name; 
       await Storage.put(fileName, file, { level: 'public', type: file.type });
-  
-      const imageUrl = `https://worklinkerd500aa700a28476bb7438a0dbef726b3222139-prod.s3.amazonaws.com/public/${fileName}`;
+      console.log(file)
+      const imageUrl = `https://universidad-nova-storage05757-prod.s3.amazonaws.com/public/img/${fileName}`;
       setImagenURL(imageUrl);
   
       // La carga del archivo se realizó con éxito
@@ -246,31 +169,44 @@ function RegistroUsuarioInformacion() {
             </Grid>
           ))}
           <Grid item xs={12}>
-            <TextField
-              label="Imagen estudiante"
-              margin="normal"
-              placeholder="Carga imagen del estudiante"
-              value={imagenURL || ""}
-              InputProps={{
-                endAdornment: (
-                  <label htmlFor="icon-button-file">
-                    <Button component="span" variant="contained" startIcon={<TbCloudUpload />}
-                      sx={{ backgroundColor: '#deeceb', '&:hover': { backgroundColor: '#deeceb' } }}>
-                      Cargar
-                    </Button>
-                  </label>
-                ),
-              }}
-              fullWidth
-              InputLabelProps={{ shrink: true }}
-              disabled
-            />
+          <TextField
+                label="Imagen del Estudiante"
+                size="normal"
+                margin="normal"
+                placeholder="Carga imágen del Estudiante"
+                value={imagenURL ? imagenURL : ""}
+                InputProps={{
+                  endAdornment: (
+                    <label htmlFor="icon-button-file">
+                      <Button component="span" variant="contained" startIcon={<TbCloudUpload />}
+                        sx={{ backgroundColor: '#5c6bc0','&:hover': {backgroundColor: '#3949ab'}}}>
+                        Cargar
+                      </Button>
+                      <VisuallyHiddenInput
+                        accept="image/*" id="icon-button-file" type="file" onChange={handleImageUpload} />
+                    </label>
+                  ),
+                }}
+                fullWidth
+                InputLabelProps={{ shrink: true }}
+                disabled
+              />
           </Grid>
         </Grid>
       </Grid>
       <Direcciones empUbicacion={empUbicacion} setEmpUbicacion={setEmpUbicacion}/>
     </Grid>
   </Form>
+  <Snackbar
+  open={openSnackbar} autoHideDuration={6000}
+  onClose={() => setOpenSnackbar(false)} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+  sx={{ '& .MuiSnackbarContent-root': { fontSize: '1.25rem' } }}>
+  <Alert onClose={() => setOpenSnackbar(false)} severity={snackbarSeverity}
+  sx={{ width: '100%', fontSize: '1rem' }} 
+  >
+  {snackbarMessage}
+  </Alert>
+</Snackbar>
 </Card>
 </div>
   );

@@ -37,7 +37,6 @@ const Inicio = () => {
             >
                 Estudiantes
             </Button>
-
             <div className='container'>
           <Grid container spacing={3} justifyContent="center" style={{ marginTop: '2rem' }}>
           {/* Misión */}
