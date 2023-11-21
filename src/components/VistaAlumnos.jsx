@@ -4,7 +4,6 @@ import AppBar from './AppBar'
 import { Table, TableRow, TableBody, TableHead, TableContainer, TableCell, Paper } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import { DataStore } from 'aws-amplify'
 
 function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };

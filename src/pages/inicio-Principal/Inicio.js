@@ -25,16 +25,8 @@ const Inicio = () => {
                 style={{ margin: '10px' }}
                 onClick={handleSignOut}
             >
-                Iniciar Registro
+                Registro
             </Button>
-            <Button 
-                variant="contained" 
-                color="secondary" 
-                style={{ margin: '10px' }}
-            >
-                Iniciar Sesión
-            </Button>
-
             <div className='container'>
           <Grid container spacing={3} justifyContent="center" style={{ marginTop: '2rem' }}>
           {/* Misión */}
