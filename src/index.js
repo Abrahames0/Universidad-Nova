@@ -75,7 +75,8 @@ const router = createBrowserRouter([
   },
 ]);
 
-function Apps() {
+
+function App() {
   return (
     <ThemeProvider theme={theme}>
       <RouterProvider router={router} />
@@ -84,5 +85,5 @@ function Apps() {
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <Apps />
+  <App />
 );
