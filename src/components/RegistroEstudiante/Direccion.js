@@ -154,47 +154,29 @@ const Direcciones = ({comprobateDomicilioPDF, setComprobateDomicilioPDF, empUbic
     const file = event.target.files[0];
   
     if (file) {
-      try {
-        const fileType = file.type;
-        let folder = "";
+      const fileType = file.type;
   
-        if (fileType === "application/pdf") {
-          folder = "pdf/";
-        } else if (fileType === "image/png") {
-          folder = "images/";
-        } else {
-          setsnackbarMessag('Formato de archivo no soportado');
-          setsnackbarSeverit('error');
-          setopenSnack(true);
-          return;
-        }
-  
-        const fileName = `${folder}${Date.now()}-${file.name}`;
-        await Storage.put(fileName, file, {
-          level: 'public',
-          contentType: file.type
-        });
-  
-        const uploadedUrl = `https://universidad-nova-storage05757-prod.s3.amazonaws.com/public/${fileName}`;
-        // Aquí establece la URL donde corresponda, dependiendo de si es un PDF o un PNG
-        setComprobateDomicilioPDF(uploadedUrl);
-  
-        setsnackbarMessag(`Archivo ${fileType === "application/pdf" ? 'PDF' : 'PNG'} cargado exitosamente`);
-        setsnackbarSeverit('success');
-        setopenSnack(true);
-      } catch (error) {
-        console.error('Error al cargar el archivo:', error);
-  
-        setsnackbarMessag('Error al guardar el archivo');
+      // Verifica el tipo de archivo y maneja la carga según el tipo
+      if (fileType === "application/pdf") {
+        // Manejar la carga de un archivo PDF
+      } else if (fileType.startsWith("image/")) {
+        // Manejar la carga de una imagen (cualquier tipo de imagen)
+      } else {
+        // Tipo de archivo no válido, muestra un mensaje de error
+        setsnackbarMessag('Formato de archivo no soportado');
         setsnackbarSeverit('error');
         setopenSnack(true);
+        return;
       }
+  
+      // Resto del código para cargar el archivo
     } else {
       setsnackbarMessag('No se seleccionó ningún archivo');
       setsnackbarSeverit('error');
       setopenSnack(true);
     }
   };
+  
 
   return (
     <div className="row justify-content-center">
@@ -235,10 +217,10 @@ const Direcciones = ({comprobateDomicilioPDF, setComprobateDomicilioPDF, empUbic
         />
         <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Certificado de bachillerato"
+                  label="Comprobante de domicilio"
                   size="normal"
                   margin="normal"
-                  placeholder="Carga certificado de bachillerato"
+                  placeholder="Carga comprobante de domicilio"
                   value={comprobateDomicilioPDF || ""}
                   InputProps={{
                     endAdornment: (
@@ -252,7 +234,7 @@ const Direcciones = ({comprobateDomicilioPDF, setComprobateDomicilioPDF, empUbic
                           Cargar
                         </Button>
                         <input
-                          accept="image/png, application/pdf"
+                          accept="application/pdf"
                           id="icon-button-file"
                           type="file"
                           onChange={handleFileUpload}

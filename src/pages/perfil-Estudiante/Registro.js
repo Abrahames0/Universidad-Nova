@@ -1,8 +1,6 @@
 import { useState } from "react";
-import Footer from '../../components/Footer';
 import { Typography,Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import NavBar from "../../components/AppBar";
 import {StepperRegistro} from "../../components/RegistroEstudiante/StepperRegistroEstudiante";
 
 import { withAuthenticator } from "@aws-amplify/ui-react";
@@ -10,17 +8,15 @@ import '@aws-amplify/ui-react/styles.css';
 
 function Registro() {
 
-  const [bde, setBde] = useState([]);
+  const [bde] = useState([]);
 
   return (
     <div>
-      <NavBar />
-      {bde ? (
+=      {bde ? (
           <StepperRegistro />
       ) : (
           <SinRegistro />
       )}
-      <Footer />
     </div>
   );
 }
