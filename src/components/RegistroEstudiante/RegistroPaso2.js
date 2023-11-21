@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
-import { DataStore } from "aws-amplify";
+import { DataStore, Storage } from "aws-amplify";
 import { SeleccionBachillerato, SeleccioCarrera } from "../../models";
-import { TextField, Card, Autocomplete, Button, Grid, InputAdornment } from "@mui/material";
+import { TextField, Card, Autocomplete, Button, Grid, InputAdornment, Snackbar, Alert } from "@mui/material";
 import { TbCloudUpload } from "react-icons/tb";
 
-function RegistroPaso2({empAcademica, setEmpAcademica}) {
+function RegistroPaso2({certificadoPDF, setCertificadoPDF, empAcademica, setEmpAcademica}) {
   console.log(empAcademica);
-  const [pdfURL, setPdfURL] = useState(null);
   const [optionsBachi, setOptionsBachi] = useState([]);
   const [optionsEspe, setOptionsEspe] = useState([]);
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState('success');
 
   useEffect(() => {
     const fetchOptions = async () => {
@@ -44,10 +47,48 @@ function RegistroPaso2({empAcademica, setEmpAcademica}) {
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
-    // Lógica para subir el archivo
-    // Deberás reemplazar esto con tu lógica de carga de archivos a AWS Amplify o tu servicio de almacenamiento
-    const uploadedUrl = 'https://universidad-nova-storage05757-prod.s3.amazonaws.com/public/pdf/'; // Obtén esta URL de tu servicio de carga de archivos
-    setPdfURL(uploadedUrl);
+  
+    if (file) {
+      try {
+        const fileType = file.type;
+        let folder = "";
+  
+        if (fileType === "application/pdf") {
+          folder = "pdf/";
+        } else if (fileType === "image/png") {
+          folder = "images/";
+        } else {
+          setSnackbarMessage('Formato de archivo no soportado');
+          setSnackbarSeverity('error');
+          setOpenSnackbar(true);
+          return;
+        }
+  
+        const fileName = `${folder}${Date.now()}-${file.name}`;
+        await Storage.put(fileName, file, {
+          level: 'public',
+          contentType: file.type
+        });
+  
+        const uploadedUrl = `https://universidad-nova-storage05757-prod.s3.amazonaws.com/public/${fileName}`;
+        // Aquí establece la URL donde corresponda, dependiendo de si es un PDF o un PNG
+        setCertificadoPDF(uploadedUrl);
+  
+        setSnackbarMessage(`Archivo ${fileType === "application/pdf" ? 'PDF' : 'PNG'} cargado exitosamente`);
+        setSnackbarSeverity('success');
+        setOpenSnackbar(true);
+      } catch (error) {
+        console.error('Error al cargar el archivo:', error);
+  
+        setSnackbarMessage('Error al guardar el archivo');
+        setSnackbarSeverity('error');
+        setOpenSnackbar(true);
+      }
+    } else {
+      setSnackbarMessage('No se seleccionó ningún archivo');
+      setSnackbarSeverity('error');
+      setOpenSnackbar(true);
+    }
   };
 
   return (
@@ -100,7 +141,7 @@ function RegistroPaso2({empAcademica, setEmpAcademica}) {
                   size="normal"
                   margin="normal"
                   placeholder="Carga certificado de bachillerato"
-                  value={pdfURL || ""}
+                  value={certificadoPDF || ""}
                   InputProps={{
                     endAdornment: (
                       <label htmlFor="icon-button-file">
@@ -124,12 +165,22 @@ function RegistroPaso2({empAcademica, setEmpAcademica}) {
                   }}
                   fullWidth
                   InputLabelProps={{ shrink: true }}
-                  disabled={!!pdfURL}
+                  disabled={!!certificadoPDF}
                 />
               </Grid>
             </Grid>
           </Form>
         </Card>
+        <Snackbar
+          open={openSnackbar} autoHideDuration={6000}
+          onClose={() => setOpenSnackbar(false)} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          sx={{ '& .MuiSnackbarContent-root': { fontSize: '1.25rem' } }}>
+          <Alert onClose={() => setOpenSnackbar(false)} severity={snackbarSeverity}
+          sx={{ width: '100%', fontSize: '1rem' }} 
+          >
+          {snackbarMessage}
+          </Alert>
+        </Snackbar>
       </div>
     </div>
   );

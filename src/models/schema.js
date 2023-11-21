@@ -313,6 +313,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "telefonoPa": {
+                    "name": "telefonoPa",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -423,6 +430,13 @@ export const schema = {
                         ]
                     }
                 },
+                "estado": {
+                    "name": "estado",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -503,13 +517,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "telefonoCasa": {
-                    "name": "telefonoCasa",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "telefonoJoven": {
                     "name": "telefonoJoven",
                     "isArray": false,
@@ -528,13 +535,6 @@ export const schema = {
                     "name": "promedioBachillerato",
                     "isArray": false,
                     "type": "Float",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "fechaRegistro": {
-                    "name": "fechaRegistro",
-                    "isArray": false,
-                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -642,5 +642,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "0a75e674f406441f62238131d5bc516b"
+    "version": "3143a39627281a1fd28eff4cb26e2429"
 };

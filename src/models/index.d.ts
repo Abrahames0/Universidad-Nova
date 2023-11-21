@@ -132,6 +132,7 @@ type EagerPadres = {
   readonly nombrePa?: string | null;
   readonly apellidoPaternoPa?: string | null;
   readonly apellidoMaternoPa?: string | null;
+  readonly telefonoPa?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly padresEstudianteId?: string | null;
@@ -151,6 +152,7 @@ type LazyPadres = {
   readonly nombrePa?: string | null;
   readonly apellidoPaternoPa?: string | null;
   readonly apellidoMaternoPa?: string | null;
+  readonly telefonoPa?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly padresEstudianteId?: string | null;
@@ -174,6 +176,7 @@ type EagerDomicilio = {
   readonly ciudad?: string | null;
   readonly codigoPostal?: string | null;
   readonly Estudiante?: (Estudiante | null)[] | null;
+  readonly estado?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -190,6 +193,7 @@ type LazyDomicilio = {
   readonly ciudad?: string | null;
   readonly codigoPostal?: string | null;
   readonly Estudiante: AsyncCollection<Estudiante>;
+  readonly estado?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -210,11 +214,9 @@ type EagerEstudiante = {
   readonly nombre?: string | null;
   readonly apellidoPaterno?: string | null;
   readonly apellidoMaterno?: string | null;
-  readonly telefonoCasa?: string | null;
   readonly telefonoJoven?: string | null;
   readonly correo?: string | null;
   readonly promedioBachillerato?: number | null;
-  readonly fechaRegistro?: string | null;
   readonly fotoEstudiante?: string | null;
   readonly certificadoBachillerato?: string | null;
   readonly comprobateDomicilio?: string | null;
@@ -236,11 +238,9 @@ type LazyEstudiante = {
   readonly nombre?: string | null;
   readonly apellidoPaterno?: string | null;
   readonly apellidoMaterno?: string | null;
-  readonly telefonoCasa?: string | null;
   readonly telefonoJoven?: string | null;
   readonly correo?: string | null;
   readonly promedioBachillerato?: number | null;
-  readonly fechaRegistro?: string | null;
   readonly fotoEstudiante?: string | null;
   readonly certificadoBachillerato?: string | null;
   readonly comprobateDomicilio?: string | null;

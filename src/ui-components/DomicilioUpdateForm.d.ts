@@ -28,6 +28,7 @@ export declare type DomicilioUpdateFormInputValues = {
     colonia?: string;
     ciudad?: string;
     codigoPostal?: string;
+    estado?: string;
 };
 export declare type DomicilioUpdateFormValidationValues = {
     calle?: ValidationFunction<string>;
@@ -35,6 +36,7 @@ export declare type DomicilioUpdateFormValidationValues = {
     colonia?: ValidationFunction<string>;
     ciudad?: ValidationFunction<string>;
     codigoPostal?: ValidationFunction<string>;
+    estado?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type DomicilioUpdateFormOverridesProps = {
@@ -44,6 +46,7 @@ export declare type DomicilioUpdateFormOverridesProps = {
     colonia?: PrimitiveOverrideProps<TextFieldProps>;
     ciudad?: PrimitiveOverrideProps<TextFieldProps>;
     codigoPostal?: PrimitiveOverrideProps<TextFieldProps>;
+    estado?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type DomicilioUpdateFormProps = React.PropsWithChildren<{
     overrides?: DomicilioUpdateFormOverridesProps | undefined | null;

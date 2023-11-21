@@ -1,7 +1,8 @@
-import { Autocomplete, Card, TextField } from "@mui/material";
-import { DataStore } from "aws-amplify";
+import { Alert, Autocomplete, Button, Grid, Snackbar, TextField } from "@mui/material";
+import { DataStore, Storage } from "aws-amplify";
 import { useEffect, useState } from "react";
 import {SeleccionableCiudad} from '../../models';
+import { TbCloudUpload } from "react-icons/tb";
 
 const validaciones = {
   codigoPostal: {
@@ -49,8 +50,11 @@ const validaciones = {
   },
 };
 
-const Direcciones = ({ empUbicacion, setEmpUbicacion }) => {
+const Direcciones = ({comprobateDomicilioPDF, setComprobateDomicilioPDF, empUbicacion, setEmpUbicacion }) => {
   const [optionsDire, setOptionsDire] = useState([]);
+  const [openSnack, setopenSnack] = useState(false);
+  const [snackbarMessag, setsnackbarMessag] = useState('');
+  const [snackbarSeverit, setsnackbarSeverit] = useState('success');
 
   useEffect(() => {
     const fetchOptions = async () => {
@@ -146,6 +150,52 @@ const Direcciones = ({ empUbicacion, setEmpUbicacion }) => {
     }
   ];
 
+  const handleFileUpload = async (event) => {
+    const file = event.target.files[0];
+  
+    if (file) {
+      try {
+        const fileType = file.type;
+        let folder = "";
+  
+        if (fileType === "application/pdf") {
+          folder = "pdf/";
+        } else if (fileType === "image/png") {
+          folder = "images/";
+        } else {
+          setsnackbarMessag('Formato de archivo no soportado');
+          setsnackbarSeverit('error');
+          setopenSnack(true);
+          return;
+        }
+  
+        const fileName = `${folder}${Date.now()}-${file.name}`;
+        await Storage.put(fileName, file, {
+          level: 'public',
+          contentType: file.type
+        });
+  
+        const uploadedUrl = `https://universidad-nova-storage05757-prod.s3.amazonaws.com/public/${fileName}`;
+        // Aquí establece la URL donde corresponda, dependiendo de si es un PDF o un PNG
+        setComprobateDomicilioPDF(uploadedUrl);
+  
+        setsnackbarMessag(`Archivo ${fileType === "application/pdf" ? 'PDF' : 'PNG'} cargado exitosamente`);
+        setsnackbarSeverit('success');
+        setopenSnack(true);
+      } catch (error) {
+        console.error('Error al cargar el archivo:', error);
+  
+        setsnackbarMessag('Error al guardar el archivo');
+        setsnackbarSeverit('error');
+        setopenSnack(true);
+      }
+    } else {
+      setsnackbarMessag('No se seleccionó ningún archivo');
+      setsnackbarSeverit('error');
+      setopenSnack(true);
+    }
+  };
+
   return (
     <div className="row justify-content-center">
             <div className="col-xs-12 col-sm-8 col-md-7 col-lg-6">
@@ -183,7 +233,54 @@ const Direcciones = ({ empUbicacion, setEmpUbicacion }) => {
             <TextField {...params} label="Ciudad de origen" variant="outlined" />
           )}
         />
+        <Grid item xs={12} sm={6}>
+                <TextField
+                  label="Certificado de bachillerato"
+                  size="normal"
+                  margin="normal"
+                  placeholder="Carga certificado de bachillerato"
+                  value={comprobateDomicilioPDF || ""}
+                  InputProps={{
+                    endAdornment: (
+                      <label htmlFor="icon-button-file">
+                        <Button
+                          component="span"
+                          variant="contained"
+                          startIcon={<TbCloudUpload />}
+                          sx={{ backgroundColor: '#deeceb', '&:hover': { backgroundColor: '#deeceb' } }}
+                        >
+                          Cargar
+                        </Button>
+                        <input
+                          accept="image/png, application/pdf"
+                          id="icon-button-file"
+                          type="file"
+                          onChange={handleFileUpload}
+                          style={{ display: 'none' }}
+                        />
+                      </label>
+                    ),
+                  }}
+                  fullWidth
+                  InputLabelProps={{ shrink: true }}
+                  disabled={!!comprobateDomicilioPDF}
+                />
+              </Grid>
       </div>
+      <Snackbar
+        open={openSnack}
+        autoHideDuration={6000}
+        onClose={() => setopenSnack(false)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <Alert
+          onClose={() => setopenSnack(false)}
+          severity={snackbarSeverit}
+          sx={{ width: '100%' }}
+        >
+          {snackbarMessag}
+        </Alert>
+      </Snackbar>
       </div>
     </div>
   );

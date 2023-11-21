@@ -28,6 +28,7 @@ type Padres @model @auth(rules: [{allow: public}]) {
   nombrePa: String
   apellidoPaternoPa: String
   apellidoMaternoPa: String
+  telefonoPa: String
 }
 
 type Domicilio @model @auth(rules: [{allow: public}]) {
@@ -38,6 +39,7 @@ type Domicilio @model @auth(rules: [{allow: public}]) {
   ciudad: String
   codigoPostal: String
   Estudiante: [Estudiante] @hasMany(indexName: "byDomicilio", fields: ["id"])
+  estado: String
 }
 
 type Estudiante @model @auth(rules: [{allow: public}]) {
@@ -46,11 +48,9 @@ type Estudiante @model @auth(rules: [{allow: public}]) {
   nombre: String
   apellidoPaterno: String
   apellidoMaterno: String
-  telefonoCasa: String
   telefonoJoven: String
   correo: String
   promedioBachillerato: Float
-  fechaRegistro: String
   fotoEstudiante: String
   certificadoBachillerato: String
   comprobateDomicilio: String

@@ -8,7 +8,7 @@ import { Button, TextField, Card, Grid, Snackbar, Alert } from "@mui/material";
 import Direcciones from "./Direccion";
 import { VisuallyHiddenInput } from "@chakra-ui/visually-hidden";
 
-function RegistroUsuarioInformacion({ imagenURL, setImagenURL, empContacto, setEmpContacto, empUbicacion, setEmpUbicacion}) {
+function RegistroUsuarioInformacion({ comprobateDomicilioPDF, setComprobateDomicilioPDF, imagenURL, setImagenURL, empContacto, setEmpContacto, empUbicacion, setEmpUbicacion}) {
 
   console.log(empContacto);
   console.log(empUbicacion);
@@ -118,7 +118,7 @@ function RegistroUsuarioInformacion({ imagenURL, setImagenURL, empContacto, setE
       const fileName = 'img/' + file.name; 
       await Storage.put(fileName, file, { level: 'public', type: file.type });
       console.log(file)
-      const imageUrl = `https://universidad-nova-storage05757-prod.s3.amazonaws.com/public/img/${fileName}`;
+      const imageUrl = `https://universidad-nova-storage05757-prod.s3.amazonaws.com/public/${fileName}`;
       setImagenURL(imageUrl);
   
       // La carga del archivo se realizó con éxito
@@ -179,11 +179,15 @@ function RegistroUsuarioInformacion({ imagenURL, setImagenURL, empContacto, setE
                   endAdornment: (
                     <label htmlFor="icon-button-file">
                       <Button component="span" variant="contained" startIcon={<TbCloudUpload />}
-                        sx={{ backgroundColor: '#5c6bc0','&:hover': {backgroundColor: '#3949ab'}}}>
+                        sx={{ backgroundColor: '#deeceb','&:hover': {backgroundColor: '#deeceb'}}}>
                         Cargar
                       </Button>
                       <VisuallyHiddenInput
-                        accept="image/*" id="icon-button-file" type="file" onChange={handleImageUpload} />
+                        accept="image/*,application/pdf"
+                        id="icon-button-file"
+                        type="file"
+                        onChange={handleImageUpload}
+                      />
                     </label>
                   ),
                 }}
@@ -194,7 +198,7 @@ function RegistroUsuarioInformacion({ imagenURL, setImagenURL, empContacto, setE
           </Grid>
         </Grid>
       </Grid>
-      <Direcciones empUbicacion={empUbicacion} setEmpUbicacion={setEmpUbicacion}/>
+      <Direcciones comprobateDomicilioPDF={comprobateDomicilioPDF} setComprobateDomicilioPDF={setComprobateDomicilioPDF}  empUbicacion={empUbicacion} setEmpUbicacion={setEmpUbicacion}/>
     </Grid>
   </Form>
   <Snackbar
