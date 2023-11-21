@@ -10,6 +10,8 @@ import "./index.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 //Importaciones de paginas
 import LoginEstudiantes from './pages/perfil-Estudiante/LoginEstudiantes';
+import VistaAlumnos from './components/VistaAlumnos';
+import VistaAlumnoUnico from './components/VistaAlumnoUnico';
 import Inicio from './pages/inicio-Principal/Inicio';
 import StepperRegistro  from './components/RegistroEstudiante/StepperRegistroEstudiante';
 import { translations } from '@aws-amplify/ui-react';
@@ -62,6 +64,13 @@ const router = createBrowserRouter([
     element: <LoginEstudiantes/>,
   },
   {
+    path: "/vista-alumnos",
+    element: <VistaAlumnos/>,
+  },
+  {
+    path: "/vista-alumno-unico",
+    element: <VistaAlumnoUnico/>,
+  },
     path: "/registro-estudiante",
     element: <Registro/>
   }
