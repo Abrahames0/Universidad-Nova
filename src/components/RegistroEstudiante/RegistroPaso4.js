@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { DataStore } from "aws-amplify";
 import { CarreraAcursar } from "../../models";
-import { TextField, Card, Autocomplete, Grid } from "@mui/material";
+import { TextField, Card, Autocomplete, Button, Grid } from "@mui/material";
 
-function RegistroPaso4({ empContacto, infAcademica, setInfAcademica }) {
+function RegistroPaso4({ empContacto, infAcademica, setInfAcademica , setStep4Valid}) {
   const [optionsBachi, setOptionsBachi] = useState([]);
+
 
   console.log(infAcademica);
 

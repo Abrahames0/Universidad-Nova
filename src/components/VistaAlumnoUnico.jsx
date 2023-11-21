@@ -43,6 +43,7 @@ function VistaAlumnoUnico() {
   }
 
   return (
+    
     <>
       <AppBar />
       <div className='container' style={{ paddingTop: '20px' }}>

@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Card, Grid, Typography } from '@mui/material';
 
-function RegistroPaso3({empPadres, setEmpPadres}) {
+function RegistroPaso3({empPadres, setEmpPadres, setStep3Valid}) {
 
 console.log(empPadres);
   const [errors, setErrors] = useState({});
+
+  const requiredFields = [
+    'nombreMadre',
+    'apellidoPaternoMadre',
+    'apellidoMaternoMadre',
+    'telefonoMadre',
+    'nombrePadre',
+    'apellidoPaternoPadre',
+    'apellidoMaternoPadre',
+    'telefonoPadre',
+  ];
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -22,6 +33,11 @@ console.log(empPadres);
     }
     return /^[a-zA-Z\s.]*$/.test(input);
   };
+
+  useEffect(() => {
+    const isFormValid = requiredFields.every((field) => empPadres[field]?.trim() !== '');
+    setStep3Valid(isFormValid);
+  }, [empPadres, requiredFields, setStep3Valid]);
 
   const fieldsMadre = [
     { name: 'nombreMadre', label: 'Nombre de la madre' },
