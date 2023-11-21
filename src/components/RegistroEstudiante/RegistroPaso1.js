@@ -58,7 +58,7 @@ function RegistroUsuarioInformacion({ comprobateDomicilioPDF, setComprobateDomic
     const hasInfo = inputs.some((input) => input.value.trim() !== '');  
 
       if (hasInfo) {
-      const allFieldsValid = inputs.every((input) => !input.error);
+        const allFieldsValid = inputs.every((input) => !input.error);
 
       if (allFieldsValid) {
         setStep1Valid(true);
