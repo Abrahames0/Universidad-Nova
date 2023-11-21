@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 //Importaciones AWS
 import awsconfig from './aws-exports';
-import { Amplify, Auth, AuthModeStrategyType} from 'aws-amplify';
+import { Amplify, Auth, AuthModeStrategyType, I18n} from 'aws-amplify';
 //Importaciones Estilo
 import "./index.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,6 +12,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginEstudiantes from './pages/perfil-Estudiante/LoginEstudiantes';
 import Inicio from './pages/inicio-Principal/Inicio';
 import { StepperRegistro } from './components/RegistroEstudiante/StepperRegistroEstudiante';
+import { translations } from '@aws-amplify/ui-react';
+import { createTheme, ThemeProvider } from '@mui/material';
 
 I18n.putVocabularies(translations);
 I18n.setLanguage('es');
