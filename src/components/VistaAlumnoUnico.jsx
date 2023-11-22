@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, Typography, Grid, Avatar } from '@mui/material';
+import { Card, CardContent, Typography, Grid, Avatar, Button } from '@mui/material';
 import Footer from './Footer';
 import AppBar from './AppBar';
 import { useLocation } from 'react-router-dom';
@@ -42,8 +42,13 @@ function VistaAlumnoUnico() {
     );
   }
 
+  const abrirCertificado = () => {
+    if (estudiante && estudiante.certificadoBachillerato) {
+      window.open(estudiante.certificadoBachillerato, '_blank');
+    }
+  };
+
   return (
-    
     <>
       <AppBar />
       <div className='container' style={{ paddingTop: '20px' }}>
@@ -88,12 +93,15 @@ function VistaAlumnoUnico() {
                 <Typography variant="body1">
                   Carrera: {estudiante.carreraDeseada}
                 </Typography>
+                {/* Botón para abrir el PDF */}
+                <Button variant="contained" color="primary" onClick={abrirCertificado} style={{ marginTop: '20px' }}>
+                  Ver PDF del Certificado de Bachillerato
+                </Button>
               </CardContent>
             </Card>
           </Grid>
         </Grid>
       </div>
-      <Footer />
     </>
   );
 }

@@ -39,7 +39,7 @@ function VistaAlumnos() {
   return (
     <>
       <AppBar />
-      <div style={{ backgroundColor: 'gray', height: '100vh', width: '100vw' }}>
+      <div style={{ height: '100vh', width: '100vw' }}>
         <div className='container'>
           <div className='d-flex justify-content-center'>
             <TableContainer component={Paper}>
@@ -83,7 +83,6 @@ function VistaAlumnos() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

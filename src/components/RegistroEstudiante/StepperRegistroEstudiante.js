@@ -128,7 +128,7 @@ export const StepperRegistro = () => {
         }
       }
 
-      const guardarPadres = async () => {
+      /* const guardarPadres = async () => {
         try {
             const padres = new Padres({
             nombreMa: empPadres.nombreMadre,
@@ -146,7 +146,60 @@ export const StepperRegistro = () => {
             console.error("Error al guardar padres:", error);
             throw error;
         }
+    } */;
+
+    const guardarPadres = async () => {
+        try {
+            // Asegúrate de que todos los campos necesarios están presentes
+            if (!validarDatosPadres(empPadres)) {
+                throw new Error("Datos de padres incompletos o inválidos");
+            }
+    
+            const padres = new Padres({
+            nombreMa: empPadres.nombreMadre,
+            apellidoPaternoMa: empPadres.apellidoPaternoMadre,
+            apellidoMaternoMa: empPadres.apellidoMaternoMadre,
+            telefonoMa: empPadres.telefonoMadre,
+            nombrePa: empPadres.apellidoPaternoPadre,
+            apellidoPaternoPa: empPadres.apellidoPaternoPadre,
+            apellidoMaternoPa: empPadres.apellidoMaternoPadre,
+            telefonoPa: empPadres.telefonoPadre
+            });
+            await DataStore.save(padres);
+            return true;
+        } catch (error) {
+            console.error("Error al guardar padres:", error);
+            // Aquí puedes actualizar el estado con información del error
+            // para mostrar un mensaje al usuario, por ejemplo
+            // setErrorState(error.message);
+            throw error; // Re-lanza el error si es necesario
+        }
     };
+
+    const validarDatosPadres = (datos) => {
+        // Lista de campos requeridos para el registro de padres
+        const camposRequeridos = [
+          'nombreMadre', 'apellidoPaternoMadre', 'apellidoMaternoMadre', 'telefonoMadre',
+          'nombrePadre', 'apellidoPaternoPadre', 'apellidoMaternoPadre', 'telefonoPadre'
+        ];
+      
+        // Verifica que cada campo requerido exista y no esté vacío
+        for (let campo of camposRequeridos) {
+          if (!datos[campo] || datos[campo].trim() === '') {
+            return false; // Retorna false si algún campo está vacío o no existe
+          }
+        }
+      
+        // Verifica que los números de teléfono sean válidos (podrías ajustar la regex según tus necesidades)
+        const regexTelefono = /^[0-9]{10}$/;
+        if (!regexTelefono.test(datos.telefonoMadre) || !regexTelefono.test(datos.telefonoPadre)) {
+          return false; // Retorna false si algún teléfono no es válido
+        }
+            
+        // Si todas las validaciones pasan, retorna true
+        return true;
+      };
+      
 
     const steps = ['Paso 1', 'paso 2', 'Paso 3', 'Paso 4', 'Paso 5'];
 
