@@ -4,7 +4,7 @@ import Footer from './Footer';
 import AppBar from './AppBar';
 import { useLocation } from 'react-router-dom';
 import { DataStore } from 'aws-amplify';
-import { Estudiante } from '../models';
+import { Domicilio, Estudiante } from '../models';
 
 function VistaAlumnoUnico() {
   const location = useLocation();
@@ -12,6 +12,24 @@ function VistaAlumnoUnico() {
   const studentId = queryParams.get('id');
 
   const [estudiante, setEstudiante] = useState(null);
+  const [domicilio, setDomicilio] = useState(null);
+
+  useEffect(() => {
+    const obtenerEstudianteYDomicilio = async () => {
+      try {
+        if (studentId) {
+          const estudianteData = await DataStore.query(Estudiante, studentId);
+          setEstudiante(estudianteData);
+          const domicilioData = await DataStore.query(Domicilio, estudianteData.domicilioID);
+          setDomicilio(domicilioData);
+        }
+      } catch (error) {
+        console.error('Error al cargar la información del estudiante y domicilio:', error);
+      }
+    };
+
+    obtenerEstudianteYDomicilio();
+  }, [studentId]);
 
   useEffect(() => {
     const obtenerEstudiante = async () => {
@@ -27,7 +45,8 @@ function VistaAlumnoUnico() {
 
     obtenerEstudiante();
   }, [studentId]);
-
+  
+  
   if (!estudiante) {
     return (
       <>
@@ -93,6 +112,17 @@ function VistaAlumnoUnico() {
                 <Typography variant="body1">
                   Carrera: {estudiante.carreraDeseada}
                 </Typography>
+                {domicilio ? (
+                  <>
+                    <Typography variant="body1">
+                      Domicilio: {domicilio.calle} {domicilio.numero}, {domicilio.colonia}, {domicilio.ciudad}. {domicilio.codigoPostal}, {domicilio.estado}
+                    </Typography>
+                  </>
+                ) : (
+                  <Typography variant="body2">
+                    Cargando domicilio...
+                  </Typography>
+                )}
                 {/* Botón para abrir el PDF */}
                 <Button variant="contained" color="primary" onClick={abrirCertificado} style={{ marginTop: '20px' }}>
                   Ver PDF del Certificado de Bachillerato

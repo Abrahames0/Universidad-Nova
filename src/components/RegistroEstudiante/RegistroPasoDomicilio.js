@@ -50,7 +50,7 @@ const validaciones = {
   },
 };
 
-const Direcciones = ({ setStep1Valid, comprobateDomicilioPDF, setComprobateDomicilioPDF, empUbicacion, setEmpUbicacion }) => {
+const Direcciones = ({ comprobateDomicilioPDF, setComprobateDomicilioPDF, empUbicacion, setEmpUbicacion }) => {
   const [optionsDire, setOptionsDire] = useState([]);
   const [openSnack, setOpenSnack] = useState(false);
   const [snackbarMessag, setsnackbarMessag] = useState('');
@@ -86,17 +86,6 @@ const Direcciones = ({ setStep1Valid, comprobateDomicilioPDF, setComprobateDomic
       error: { ...past.error, [name]: error },
       help: { ...past.help, [name]: help },
     }));
-    const hasInfo = inputs.some((input) => input.value.trim() !== '');  
-
-    if (hasInfo) {
-    const allFieldsValid = inputs.every((input) => !input.error);
-
-    if (allFieldsValid) {
-      setStep1Valid(true);
-    } else {
-      setStep1Valid(false);
-    }
-    }
   };
 
   const handleBlur = (e) => {
