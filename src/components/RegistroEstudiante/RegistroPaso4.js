@@ -39,6 +39,7 @@ function RegistroPaso4({ empContacto, infAcademica, setInfAcademica , setStep4Va
       ...prevState,
       matricula: matriculaGenerada,
     }));
+    setStep4Valid(true)
   };
 
   return (
