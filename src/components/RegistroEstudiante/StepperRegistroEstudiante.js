@@ -94,6 +94,7 @@ export const StepperRegistro = () => {
             const domicilioID = await guardarDireccion();
             if (domicilioID) {
                 await guardarProducto(domicilioID);  // Aquí pasas el domicilioID   
+                await guardarPadres();
                 navigate('/vista-alumnos'); 
                 // ... Resto del código
             } else {
@@ -155,10 +156,6 @@ export const StepperRegistro = () => {
     const guardarPadres = async () => {
         try {
             // Asegúrate de que todos los campos necesarios están presentes
-            if (!validarDatosPadres(empPadres)) {
-                throw new Error("Datos de padres incompletos o inválidos");
-            }
-    
             const padres = new Padres({
             nombreMa: empPadres.nombreMadre,
             apellidoPaternoMa: empPadres.apellidoPaternoMadre,
@@ -169,6 +166,7 @@ export const StepperRegistro = () => {
             apellidoMaternoPa: empPadres.apellidoMaternoPadre,
             telefonoPa: empPadres.telefonoPadre
             });
+            console.log(padres);
             await DataStore.save(padres);
             return true;
         } catch (error) {
