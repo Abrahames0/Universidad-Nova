@@ -267,24 +267,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "Estudiante": {
-                    "name": "Estudiante",
-                    "isArray": false,
-                    "type": {
-                        "model": "Estudiante"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": [
-                            "id"
-                        ],
-                        "targetNames": [
-                            "padresEstudianteId"
-                        ]
-                    }
-                },
                 "telefonoMa": {
                     "name": "telefonoMa",
                     "isArray": false,
@@ -335,13 +317,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
-                },
-                "padresEstudianteId": {
-                    "name": "padresEstudianteId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
                 }
             },
             "syncable": true,
@@ -642,5 +617,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "3143a39627281a1fd28eff4cb26e2429"
+    "version": "1802103d372a41f70dc6550528616adc"
 };

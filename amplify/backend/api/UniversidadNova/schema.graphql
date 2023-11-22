@@ -23,7 +23,6 @@ type Padres @model @auth(rules: [{allow: public}]) {
   nombreMa: String
   apellidoPaternoMa: String
   apellidoMaternoMa: String
-  Estudiante: Estudiante @hasOne
   telefonoMa: String
   nombrePa: String
   apellidoPaternoPa: String

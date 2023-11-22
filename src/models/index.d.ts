@@ -1,6 +1,6 @@
 import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
-import { LazyLoading, LazyLoadingDisabled, AsyncItem, AsyncCollection } from "@aws-amplify/datastore";
+import { LazyLoading, LazyLoadingDisabled, AsyncCollection } from "@aws-amplify/datastore";
 
 
 
@@ -127,7 +127,6 @@ type EagerPadres = {
   readonly nombreMa?: string | null;
   readonly apellidoPaternoMa?: string | null;
   readonly apellidoMaternoMa?: string | null;
-  readonly Estudiante?: Estudiante | null;
   readonly telefonoMa?: string | null;
   readonly nombrePa?: string | null;
   readonly apellidoPaternoPa?: string | null;
@@ -135,7 +134,6 @@ type EagerPadres = {
   readonly telefonoPa?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly padresEstudianteId?: string | null;
 }
 
 type LazyPadres = {
@@ -147,7 +145,6 @@ type LazyPadres = {
   readonly nombreMa?: string | null;
   readonly apellidoPaternoMa?: string | null;
   readonly apellidoMaternoMa?: string | null;
-  readonly Estudiante: AsyncItem<Estudiante | undefined>;
   readonly telefonoMa?: string | null;
   readonly nombrePa?: string | null;
   readonly apellidoPaternoPa?: string | null;
@@ -155,7 +152,6 @@ type LazyPadres = {
   readonly telefonoPa?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly padresEstudianteId?: string | null;
 }
 
 export declare type Padres = LazyLoading extends LazyLoadingDisabled ? EagerPadres : LazyPadres
