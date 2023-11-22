@@ -1,6 +1,6 @@
 import { Auth } from 'aws-amplify';
 
-async function EnviarCorreoHook(usuario) {
+async function EnviarCorreoHook(correo, matricula) {
     try {
       const user = await Auth.currentSession();
       var token = user.idToken.jwtToken;
@@ -8,10 +8,10 @@ async function EnviarCorreoHook(usuario) {
       const requestOptions = {
         method: 'POST',
         headers: {
-          Authorization: "Bearer " + token,
+          Authorization: "Bearer" + token,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email: usuario.correo, matricula: usuario.matricula}),
+        body: JSON.stringify({ email: correo, matricula: matricula}),
       };
       const response = await fetch(url, requestOptions
       );
