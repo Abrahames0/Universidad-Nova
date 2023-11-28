@@ -14,8 +14,13 @@ import VistaAlumnos from './components/VistaAlumnos';
 import VistaAlumnoUnico from './components/VistaAlumnoUnico';
 import Inicio from './pages/inicio-Principal/Inicio';
 import { translations } from '@aws-amplify/ui-react';
-import { createTheme, ThemeProvider } from '@mui/material';
+import { useContext } from 'react';
+
+import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material';
+import { ThemeProvide, ThemeContext } from './components/ThemeContext';
+
 import Registro from './pages/perfil-Estudiante/Registro';
+import ThemeToggle from './components/ThemeToggle';
 
 I18n.putVocabularies(translations);
 I18n.setLanguage('es');
@@ -77,13 +82,18 @@ const router = createBrowserRouter([
 
 
 function App() {
+  const { muiTheme } = useContext(ThemeContext);
+
   return (
-    <ThemeProvider theme={theme}>
+    <MuiThemeProvider theme={muiTheme}>
+      <ThemeToggle/>
       <RouterProvider router={router} />
-    </ThemeProvider>
+    </MuiThemeProvider>
   );
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <App />
+  <ThemeProvide>
+    <App />
+  </ThemeProvide>
 );
