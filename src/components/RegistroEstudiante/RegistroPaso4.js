@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { DataStore } from "aws-amplify";
 import { CarreraAcursar } from "../../models";
-import { TextField, Card, Autocomplete, Grid } from "@mui/material";
+import { TextField, Card, Autocomplete, Grid, Box } from "@mui/material";
 
 function RegistroPaso4({ empContacto, infAcademica, setInfAcademica , setStep4Valid}) {
   const [optionsBachi, setOptionsBachi] = useState([]);
@@ -43,7 +43,10 @@ function RegistroPaso4({ empContacto, infAcademica, setInfAcademica , setStep4Va
   };
 
   return (
-    <div className="row justify-content-center">
+    <Box
+      sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '70vh',
+      }}
+    >
       <div className="col-xs-12 col-sm-8 col-md-7 col-lg-6" style={{ padding: '1rem' }}>
         <Card sx={{ display: 'flex', flexDirection: 'column', justifyContent: "center", alignItems: "center", m: 1, padding: '1rem' }} variant="outlined">
           <Form noValidate>
@@ -80,7 +83,7 @@ function RegistroPaso4({ empContacto, infAcademica, setInfAcademica , setStep4Va
           </Form>
         </Card>
       </div>
-    </div>
+    </Box>
   );
 }
 

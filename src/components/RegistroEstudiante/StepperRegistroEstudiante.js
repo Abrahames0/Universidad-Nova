@@ -9,26 +9,8 @@ import { DataStore } from 'aws-amplify';
 import { useNavigate } from 'react-router-dom';
 import EnviarCorreoHook from '../EnviarCorreoHook.jsx'
 import Direcciones from './RegistroPasoDomicilio.js';
+import { withValidation } from '../hooks/DecorativeValidatios.js';
 import Swal from 'sweetalert2';
-
-// Definición de la función 'withValidation' antes de ser utilizada
-const withValidation = (originalFunction, validationFunction) => {
-  return async (...args) => {
-    const resultadoValidacion = validationFunction(...args);
-
-    if (!resultadoValidacion.valido) {
-      await Swal.fire({
-        title: 'Error!',
-        text: resultadoValidacion.mensaje,
-        icon: 'error',
-        confirmButtonText: 'Entendido'
-      });
-      return;
-    }
-
-    return originalFunction(...args);
-  };
-};
 
 export const StepperRegistro = () => {
     const navigate= useNavigate();
@@ -37,7 +19,6 @@ export const StepperRegistro = () => {
     const [step2Valid, setStep2Valid] = useState(false);
     const [step3Valid, setStep3Valid] = useState(false);
     const [step4Valid, setStep4Valid] = useState(false);
-
 
     const [userEmail] = useState("");
 
@@ -88,7 +69,6 @@ export const StepperRegistro = () => {
       calle: "", numero: "", colonia: "", codigoPostal: "", estado: "", ciudad: "",
     });
 
-
     const guardarDireccion = async () => {
         try {
           const direccion = new Domicilio({
@@ -110,7 +90,6 @@ export const StepperRegistro = () => {
       const validarDatosPadres = (datos) => {
         // Lista de campos requeridos para el registro de padres
         const camposRequeridos = [
-          // ... otros campos ...
           'nombreMadre', 'apellidoPaternoMadre', 'apellidoMaternoMadre', 'telefonoMadre',
           'nombrePadre', 'apellidoPaternoPadre', 'apellidoMaternoPadre', 'telefonoPadre'
         ];
@@ -148,9 +127,6 @@ export const StepperRegistro = () => {
             if (!empContacto.telefono) {
               return { valido: false, mensaje: "El campo 'Telefono' está incompleto." };
             }
-            /* if (!empContacto.imagenURL) {
-              return { valido: false, mensaje: "El campo 'Imagen del Estudiante' está incompleto." };
-            } */
             break;
           case 1:
             /* Direcciones */
@@ -218,7 +194,6 @@ export const StepperRegistro = () => {
             return { valido: false, mensaje: "El campo 'Carrera que desea cursar' está incompleto." };
           } 
         break;
-      // Agrega más casos si hay más pasos
         }
         return { valido: true };
       };
@@ -246,19 +221,15 @@ export const StepperRegistro = () => {
                 // Manejo del error
             }
         } else {
-            // No es el último paso, simplemente pasa al siguiente paso
             if (activeStep === 2 && !step2Valid) {
-                // Mostrar mensaje de validación para el paso 2
                 console.log("Complete el fomrulario del paso 2");
                 return;
             }
             if (activeStep === 3 && !step3Valid) {
-                // Mostrar mensaje de validación para el paso 3
                 console.log("Complete el fomrulario del paso 3");
                 return;
             }
             if (activeStep === 4 && !step4Valid) {
-                // Mostrar mensaje de validación para el paso 3
                 console.log("Complete el fomrulario del paso 4");
                 return;
             }
@@ -268,18 +239,41 @@ export const StepperRegistro = () => {
     
     const handleFinalizar = async () => {
       try {
-          const domicilioID = await guardarDireccion();
-          if (domicilioID) {
-              await guardarProducto(domicilioID);  // Aquí pasas el domicilioID   
-              navigate('/vista-alumnos'); 
-              // ... Resto del código
+        const domicilioID = await guardarDireccion();
+        if (domicilioID) {
+          const estudianteGuardado = await guardarProducto(domicilioID);
+          const padresGuardados = await guardarPadres();
+          if (estudianteGuardado && padresGuardados) {
+            // Si todo se guardó correctamente, muestra un mensaje de éxito
+            await Swal.fire(
+              '¡Registro completo!',
+              'Los datos se han guardado correctamente.',
+              'success'
+            );
+            // Redirige al usuario a la vista de alumnos
+            navigate('/vista-alumnos');
           } else {
-              console.error("Error al guardar la dirección");
+            // Si algo no se guardó correctamente, muestra un mensaje de error
+            Swal.fire(
+              'Error',
+              'Hubo un problema al guardar la información. Por favor, intenta de nuevo.',
+              'error'
+            );
           }
+        } else {
+          console.error("Error al guardar la dirección");
+          throw new Error("Error al guardar la dirección");
+        }
       } catch (error) {
-          console.error("Error al completar el registro", error);
+        console.error("Error al completar el registro", error);
+        // Muestra un mensaje de error con Swal
+        Swal.fire(
+          'Error',
+          'Hubo un problema al guardar la información. Por favor, intenta de nuevo.',
+          'error'
+        );
       }
-  };
+    };
 
     const handleNextWithValidation = withValidation(handleNext, validarDatos);
     const handleFinalizarWithValidation = withValidation(handleFinalizar, validarDatos);
@@ -334,11 +328,9 @@ export const StepperRegistro = () => {
 
   const guardarPadres = async () => {
     try {
-        // Asegúrate de que todos los campos necesarios están presentes
         if (!validarDatosPadres(empPadres)) {
             throw new Error("Datos de padres incompletos o inválidos");
         }
-
         const padres = new Padres({
         nombreMa: empPadres.nombreMadre,
         apellidoPaternoMa: empPadres.apellidoPaternoMadre,
@@ -353,34 +345,32 @@ export const StepperRegistro = () => {
         return true;
     } catch (error) {
         console.error("Error al guardar padres:", error);
-        // Aquí puedes actualizar el estado con información del error
-        // para mostrar un mensaje al usuario, por ejemplo
-        // setErrorState(error.message);
         throw error; // Re-lanza el error si es necesario
     }
 };
 
-    return (
-      <Box className='pb-5'>
+  return (
+    <Box className="pb-5">
       <CardHeader className="text-center" title="Registro de Usuario" />
       <Stepper activeStep={activeStep} alternativeLabel>
-          {steps.map((label) => (
-              <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-              </Step>
-          ))}
+        {steps.map((label) => (
+          <Step key={label}>
+            <StepLabel>{label}</StepLabel>
+          </Step>
+        ))}
       </Stepper>
-      <div className="text-center">
-          {getStepContent(activeStep)}
-          <div>
-              <Button disabled={activeStep === 0} onClick={handleBack}>
-                  Atrás
-              </Button>
-              <Button variant="contained" color="primary" onClick={activeStep === steps.length - 1 ? handleFinalizarWithValidation : handleNextWithValidation}>
-                  {activeStep === steps.length - 1 ? 'Finalizar' : 'Siguiente'}
-              </Button>
-          </div>
-      </div>
-  </Box>
-    );
+      <Box className="text-center">
+        {getStepContent(activeStep)}
+        <Box className="pb-5">
+          <Button disabled={activeStep === 0} onClick={handleBack}>
+            Atrás
+          </Button>
+          <Button variant="contained" color="primary"
+            onClick={ activeStep === steps.length - 1 ? handleFinalizarWithValidation : handleNextWithValidation } >
+            {activeStep === steps.length - 1 ? "Finalizar" : "Siguiente"}
+          </Button>
+        </Box>
+      </Box>
+    </Box>
+  );
 };

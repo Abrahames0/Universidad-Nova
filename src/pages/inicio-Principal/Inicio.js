@@ -1,7 +1,8 @@
 import { Button, Card, CardContent, Grid, Typography } from '@mui/material';
-import React from 'react';
+import React, { useContext } from 'react';
 import Logo from '../../assets/img/Universidad Nova.png'
 import { useNavigate } from 'react-router-dom';
+import { ThemeContext } from '../../components/ThemeContext';
 
 
 const Inicio = () => {
@@ -15,8 +16,16 @@ const Inicio = () => {
       }
     }
 
+    const { theme } = useContext(ThemeContext);
+
+const styles = {
+  backgroundColor: theme === 'light' ? 'white' : 'black',
+  color: theme === 'light' ? 'black' : 'white',
+  textAlign: 'center',
+};
+
     return (
-        <div style={{ textAlign: 'center', marginTop: '10%' }}>
+        <div style={styles}>
              <img src={Logo} alt="logo-nova" className="img-fluid logo-nova" />
             <h1>Bienvenido a la Universidad Nova</h1>
             <Button 

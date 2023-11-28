@@ -1,4 +1,4 @@
-import { Alert, Autocomplete, Button, Grid, Snackbar, TextField } from "@mui/material";
+import { Alert, Autocomplete, Box, Button, Card, Grid, Snackbar, TextField } from "@mui/material";
 import { DataStore, Storage } from "aws-amplify";
 import { useEffect, useState } from "react";
 import {SeleccionableCiudad} from '../../models';
@@ -197,10 +197,10 @@ const Direcciones = ({ comprobateDomicilioPDF, setComprobateDomicilioPDF, empUbi
   };   
   
   return (
-    <div className="row justify-content-center">
-            <div className="col-xs-12 col-sm-8 col-md-7 col-lg-6">
+    <Box className="row justify-content-center">
+      <div className="col-xs-12 col-sm-8 col-md-7 col-lg-6">
       <h6>Direccion</h6>
-      <div className="row p-2">
+      <Card  sx={{ justifyContent: "center", alignItems: "center", m: 1 }} variant="outlined" className="row p-2">
         {inputs.map((input) => (
           <div className="col-sm-12 col-md-6 p-2" key={input.id}>
             <TextField
@@ -266,7 +266,7 @@ const Direcciones = ({ comprobateDomicilioPDF, setComprobateDomicilioPDF, empUbi
                   disabled={!!comprobateDomicilioPDF}
                 />
               </Grid>
-      </div>
+      </Card>
       <Snackbar
         open={openSnack}
         autoHideDuration={6000}
@@ -282,7 +282,7 @@ const Direcciones = ({ comprobateDomicilioPDF, setComprobateDomicilioPDF, empUbi
         </Alert>
       </Snackbar>
       </div>
-    </div>
+    </Box>
   );
 };
 

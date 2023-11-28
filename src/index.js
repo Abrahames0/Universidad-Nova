@@ -14,13 +14,13 @@ import VistaAlumnos from './components/VistaAlumnos';
 import VistaAlumnoUnico from './components/VistaAlumnoUnico';
 import Inicio from './pages/inicio-Principal/Inicio';
 import { translations } from '@aws-amplify/ui-react';
-import { useContext } from 'react';
 
-import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material';
-import { ThemeProvide, ThemeContext } from './components/ThemeContext';
+import ThemeToggle from './components/ThemeToggle';
+
+//Importaciones del Contexto de Tema
+import { ThemeProvider } from './components/ThemeContext';
 
 import Registro from './pages/perfil-Estudiante/Registro';
-import ThemeToggle from './components/ThemeToggle';
 
 I18n.putVocabularies(translations);
 I18n.setLanguage('es');
@@ -42,20 +42,6 @@ I18n.putVocabularies({
 
 Amplify.configure({ ...awsconfig, DataStore: { authModeStrategyType: AuthModeStrategyType.MULTI_AUTH } });
 Auth.configure(awsconfig);
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#deeceb',
-    },
-  },
-
-  typography: {
-    button: {
-      textTransform: 'none',
-    },
-  },
-});
 
 const router = createBrowserRouter([
   {
@@ -81,19 +67,16 @@ const router = createBrowserRouter([
 ]);
 
 
+// Componente principal App
 function App() {
-  const { muiTheme } = useContext(ThemeContext);
-
   return (
-    <MuiThemeProvider theme={muiTheme}>
-      <ThemeToggle/>
+    <ThemeProvider>
       <RouterProvider router={router} />
-    </MuiThemeProvider>
+     <ThemeToggle /> 
+
+    </ThemeProvider>
   );
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <ThemeProvide>
-    <App />
-  </ThemeProvide>
-);
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);

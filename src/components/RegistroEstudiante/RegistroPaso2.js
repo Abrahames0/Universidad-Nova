@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { DataStore, Storage } from "aws-amplify";
 import { SeleccionBachillerato, SeleccioCarrera } from "../../models";
-import { TextField, Card, Autocomplete, Button, Grid, InputAdornment, Snackbar, Alert } from "@mui/material";
+import { TextField, Card, Autocomplete, Button, Grid, InputAdornment, Snackbar, Alert, Box } from "@mui/material";
 import { TbCloudUpload } from "react-icons/tb";
 
 function RegistroPaso2({certificadoPDF, setCertificadoPDF, empAcademica, setEmpAcademica, setStep2Valid}) {
@@ -124,7 +124,15 @@ function RegistroPaso2({certificadoPDF, setCertificadoPDF, empAcademica, setEmpA
   }, [validFields, setStep2Valid]);
 
   return (
-    <div className="row justify-content-center">
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '70vh',
+      }}
+    >
       <div className="col-xs-12 col-sm-8 col-md-7 col-lg-6" style={{ padding: '1rem' }}>
         <Card sx={{ justifyContent: "center", alignItems: "center", m: 1, padding: '1rem' }} variant="outlined">
           <Form noValidate >
@@ -214,7 +222,7 @@ function RegistroPaso2({certificadoPDF, setCertificadoPDF, empAcademica, setEmpA
           </Alert>
         </Snackbar>
       </div>
-    </div>
+    </Box>
   );
 }
 
