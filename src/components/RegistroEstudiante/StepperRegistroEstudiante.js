@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, CardHeader, Stepper, Step, StepLabel, Button } from '@mui/material';
 import RegistroPaso1 from './RegistroPaso1';
-import RegistroPaso2 from './RegistroPaso2';
-import RegistroPaso3 from './RegistroPaso3';
-import RegistroPaso4 from './RegistroPaso4';
+
 import { Estudiante, Padres, Domicilio } from '../../models';
 import { DataStore } from 'aws-amplify';
 import { useNavigate } from 'react-router-dom';
@@ -11,22 +9,27 @@ import EnviarCorreoHook from '../EnviarCorreoHook.jsx'
 import Direcciones from './RegistroPasoDomicilio.js';
 import { withValidation } from '../hooks/DecorativeValidatios.js';
 import Swal from 'sweetalert2';
+import QueEstudiar from './QueEstudiar.js';
+import FormularioFactory from './FormularioFactory.js';
 
 export const StepperRegistro = () => {
+ 
+    const [userEmail] = useState("");
     const navigate= useNavigate();
-    const [activeStep, setActiveStep] = useState(0);
+    
+    const steps = ['Paso 1', 'Paso 2', 'Paso 3', 'Paso 4', 'Paso 5', 'Paso 6'];
     //Estados de Validacion de Pasos
     const [step2Valid, setStep2Valid] = useState(false);
     const [step3Valid, setStep3Valid] = useState(false);
     const [step4Valid, setStep4Valid] = useState(false);
-
-    const [userEmail] = useState("");
+    
+    const [activeStep, setActiveStep] = useState(0);
+    const [subStep, setSubStep] = useState('');
 
     const [imagenURL, setImagenURL] = useState(null);
     const [certificadoPDF, setCertificadoPDF] = useState(null);
+    const [cartaPDF, setCartaPDF] = useState(null);
     const [comprobateDomicilioPDF, setComprobateDomicilioPDF] = useState(null);
-
-    const steps = ['Paso 1', 'Paso 2', 'Paso 3', 'Paso 4', 'Paso 5'];
 
     const [empContacto, setEmpContacto] = useState({
       nombres: '',
@@ -42,11 +45,18 @@ export const StepperRegistro = () => {
     });
 
     const [empAcademica, setEmpAcademica ] = useState({
-    nombresBachillerato: '',
-    promedio: '',
-    especialidadCursada: '',
-    error: {},
-    help: {}
+      nombresBachillerato: '',
+      promedio: '',
+      especialidadCursada: '', //ing
+
+      nombresUniversidad: '', //maes
+      promedioUniversidad: '', 
+      tituloGrado: '',
+      fechaGraduacion: '',
+      areaEspecialicacion: '',
+      razonPrograma: '',
+      error: {},
+      help: {}
     });
 
     const [infAcademica, setInfAcademica] = useState({
@@ -69,6 +79,10 @@ export const StepperRegistro = () => {
       calle: "", numero: "", colonia: "", codigoPostal: "", estado: "", ciudad: "",
     });
 
+    const [empQueEstudiar, setEmpQueEstudiar] = useState({
+      queEstudiar: "",
+    });
+
     const guardarDireccion = async () => {
         try {
           const direccion = new Domicilio({
@@ -85,7 +99,11 @@ export const StepperRegistro = () => {
           console.error(error);
           throw error;
         }
-      }    
+      }  
+      
+      useEffect(() => {
+        console.log(activeStep)
+      }, [activeStep]);
 
       const validarDatosPadres = (datos) => {
         // Lista de campos requeridos para el registro de padres
@@ -112,6 +130,10 @@ export const StepperRegistro = () => {
       };
 
       const validarDatos = () => {
+        let tipoValidacion;
+          if (activeStep === 4) {
+            tipoValidacion = subStep;
+          }
         switch (activeStep) {
           case 0:
             // Validaciones para el paso 1
@@ -148,8 +170,8 @@ export const StepperRegistro = () => {
             if (!empUbicacion.ciudad) {
               return { valido: false, mensaje: "El campo 'Ciudad' está incompleto." };
             }
-            break;
-          case 2:
+            break;          
+          case 3:
             /* Componete de informacion academica */
           if (!empAcademica.nombresBachillerato) {
             return { valido: false, mensaje: "El campo 'Nombre de tu bachillerato' está incompleto." };
@@ -161,35 +183,41 @@ export const StepperRegistro = () => {
             return { valido: false, mensaje: "El campo 'Especialidad' está incompleto." };
           }
             break;
-          case 3:
-              /* Componete de los padres -- madre */
-          if (!empPadres.nombreMadre) {
-            return { valido: false, mensaje: "El campo 'Nombre de la madre' está incompleto." };
-          }
-          if (!empPadres.apellidoPaternoMadre) {
-            return { valido: false, mensaje: "El campo 'Apellido paterno de la madre' está incompleto." };
-          }
-          if (!empPadres.apellidoMaternoMadre) {
-            return { valido: false, mensaje: "El campo 'Apellido materno de la madre' está incompleto." };
-          }
-          if (!empPadres.telefonoMadre) {
-            return { valido: false, mensaje: "El campo 'Telefono de la madre' está incompleto." };
-          }
-          /* Componete de los padres -- padre */
-          if (!empPadres.nombrePadre) {
-            return { valido: false, mensaje: "El campo 'Nombre de la padre' está incompleto." };
-          }
-          if (!empPadres.apellidoPaternoPadre) {
-            return { valido: false, mensaje: "El campo 'Apellido paterno del padre' está incompleto." };
-          }
-          if (!empPadres.apellidoMaternoPadre) {
-            return { valido: false, mensaje: "El campo 'Apellido materno del padre' está incompleto." };
-          }
-          if (!empPadres.telefonoPadre) {
-            return { valido: false, mensaje: "El campo 'Telefono del padre' está incompleto." };
-          }
-        break;
-          case 4:
+            case 4:
+              if (empQueEstudiar.queEstudiar === 'ingenieria') {
+                if (!empPadres.nombreMadre) {
+                  return { valido: false, mensaje: "El campo 'Nombre de la madre' está incompleto." };
+                }
+                if (!empPadres.apellidoPaternoMadre) {
+                  return { valido: false, mensaje: "El campo 'Apellido paterno de la madre' está incompleto." };
+                }
+                if (!empPadres.apellidoMaternoMadre) {
+                  return { valido: false, mensaje: "El campo 'Apellido materno de la madre' está incompleto." };
+                }
+                if (!empPadres.telefonoMadre) {
+                  return { valido: false, mensaje: "El campo 'Telefono de la madre' está incompleto." };
+                }
+                /* Componete de los padres -- padre */
+                if (!empPadres.nombrePadre) {
+                  return { valido: false, mensaje: "El campo 'Nombre de la padre' está incompleto." };
+                }
+                if (!empPadres.apellidoPaternoPadre) {
+                  return { valido: false, mensaje: "El campo 'Apellido paterno del padre' está incompleto." };
+                }
+                if (!empPadres.apellidoMaternoPadre) {
+                  return { valido: false, mensaje: "El campo 'Apellido materno del padre' está incompleto." };
+                }
+                if (!empPadres.telefonoPadre) {
+                  return { valido: false, mensaje: "El campo 'Telefono del padre' está incompleto." };
+                }
+              } else if (empQueEstudiar.queEstudiar === 'maestria') {
+                // Validaciones para los datos adicionales
+                if (!empAcademica.razonPrograma) {
+                  return { valido: false, mensaje: "El campo 'Razón del Programa' está incompleto." };
+                }
+              }
+              break;
+          case 5:
           if (!infAcademica.carreraAcursar) {
             return { valido: false, mensaje: "El campo 'Carrera que desea cursar' está incompleto." };
           } 
@@ -221,18 +249,6 @@ export const StepperRegistro = () => {
                 // Manejo del error
             }
         } else {
-            if (activeStep === 2 && !step2Valid) {
-                console.log("Complete el fomrulario del paso 2");
-                return;
-            }
-            if (activeStep === 3 && !step3Valid) {
-                console.log("Complete el fomrulario del paso 3");
-                return;
-            }
-            if (activeStep === 4 && !step4Valid) {
-                console.log("Complete el fomrulario del paso 4");
-                return;
-            }
             setActiveStep((prevActiveStep) => prevActiveStep + 1);
         }
     };   
@@ -283,21 +299,62 @@ export const StepperRegistro = () => {
     };
 
     const getStepContent = (stepIndex) => {
-        switch (stepIndex) {
-            case 0:
-                return <RegistroPaso1 comprobateDomicilioPDF={comprobateDomicilioPDF} setComprobateDomicilioPDF={setComprobateDomicilioPDF} imagenURL={imagenURL} setImagenURL={setImagenURL} empContacto={empContacto} setEmpContacto={setEmpContacto} />;
-            case 1:
-                 return <Direcciones comprobateDomicilioPDF={comprobateDomicilioPDF} setComprobateDomicilioPDF={setComprobateDomicilioPDF} empUbicacion={empUbicacion} setEmpUbicacion={setEmpUbicacion} />;
-            case 2:
-                return <RegistroPaso2 certificadoPDF={certificadoPDF} setCertificadoPDF={setCertificadoPDF} empAcademica={empAcademica} setEmpAcademica={setEmpAcademica} setStep2Valid={setStep2Valid} />;
-            case 3:
-                return <RegistroPaso3 empPadres={empPadres} setEmpPadres={setEmpPadres} setStep3Valid={setStep3Valid}/>;
-            case 4:
-                return <RegistroPaso4 empContacto={empContacto} infAcademica={infAcademica} setInfAcademica={setInfAcademica} setStep4Valid={setStep4Valid}/>;
-            default:
-                return 'Paso desconocido';
-        }
-    };  
+      switch (stepIndex) {
+        case 0:
+          return (
+            <RegistroPaso1
+              comprobateDomicilioPDF={comprobateDomicilioPDF}
+              setComprobateDomicilioPDF={setComprobateDomicilioPDF}
+              imagenURL={imagenURL}
+              setImagenURL={setImagenURL}
+              empContacto={empContacto}
+              setEmpContacto={setEmpContacto}
+            />
+          );
+        case 1:
+          return (
+            <Direcciones
+              comprobateDomicilioPDF={comprobateDomicilioPDF}
+              setComprobateDomicilioPDF={setComprobateDomicilioPDF}
+              empUbicacion={empUbicacion}
+              setEmpUbicacion={setEmpUbicacion}
+            />
+          );
+        case 2:
+          return (
+            <QueEstudiar
+              empQueEstudiar={empQueEstudiar}
+              setEmpQueEstudiar={setEmpQueEstudiar}
+            />
+          );
+        case 3:
+          const Formulario = FormularioFactory.crearFormulario( empQueEstudiar.queEstudiar, activeStep );
+          if (Formulario) {
+            return (
+              <Formulario certificadoPDF={certificadoPDF} setCertificadoPDF={setCertificadoPDF} empAcademica={empAcademica} setEmpAcademica={setEmpAcademica} setStep2Valid={setStep2Valid}/>
+            );
+          } else
+            return <div>Por favor, selecciona un programa para continuar.</div>;
+        case 4:
+          const Formulario1 = FormularioFactory.crearFormulario(empQueEstudiar.queEstudiar, stepIndex);
+          if (Formulario1) {
+            return (
+              <Formulario1 cartaPDF={cartaPDF} setCartaPDF={setCartaPDF} empPadres={empPadres} setEmpPadres={setEmpPadres} setStep3Valid={setStep3Valid} empAcademica={empAcademica} setEmpAcademica={setEmpAcademica}/>
+            );
+          } else
+            return <div>Por favor, selecciona un programa para continuar.</div>;
+        case 5:
+          const InAcadémica = FormularioFactory.crearFormulario(empQueEstudiar.queEstudiar, stepIndex);
+          if (InAcadémica) {
+            return (
+              <InAcadémica empContacto={empContacto} infAcademica={infAcademica} setInfAcademica={setInfAcademica} setStep4Valid={setStep4Valid}/>
+            );
+          } else
+            return <div>Por favor, selecciona un programa para continuar.</div>;
+        default:
+          return "Paso desconocido";
+      }
+    }; 
 
     const guardarProducto = async (domicilioID) => {
       try {
@@ -315,6 +372,8 @@ export const StepperRegistro = () => {
           carreraDeseada: infAcademica.carreraAcursar,
           fotoEstudiante: imagenURL,
           certificadoBachillerato: certificadoPDF,
+          queDeseasEstudiar: empQueEstudiar.queEstudiar,
+          cartaIntencion: cartaPDF,
           comprobateDomicilio: comprobateDomicilioPDF,
         })
         await DataStore.save(estudiante);

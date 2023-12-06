@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { DataStore, Storage } from "aws-amplify";
-import { SeleccionBachillerato, SeleccioCarrera } from "../../models";
+import { SeleccioCarrera, UniversidadProveniente } from "../../../models";
 import { TextField, Card, Autocomplete, Button, Grid, InputAdornment, Snackbar, Alert, Box } from "@mui/material";
 import { TbCloudUpload } from "react-icons/tb";
 
-function RegistroPaso2({certificadoPDF, setCertificadoPDF, empAcademica, setEmpAcademica, setStep2Valid}) {
+function RegistroMaestriaPaso4({certificadoPDF, setCertificadoPDF, empAcademica, setEmpAcademica, setStep2Valid}) {
 
+  console.log(empAcademica);
   const [optionsBachi, setOptionsBachi] = useState([]);
   const [optionsEspe, setOptionsEspe] = useState([]);
   const [validFields, setValidFields] = useState({
@@ -22,9 +23,9 @@ function RegistroPaso2({certificadoPDF, setCertificadoPDF, empAcademica, setEmpA
   useEffect(() => {
     const fetchOptions = async () => {
       try {
-        const itemsBachi = await DataStore.query(SeleccionBachillerato);
+        const itemsBachi = await DataStore.query(UniversidadProveniente);
         const itemsEspe = await DataStore.query(SeleccioCarrera);
-        setOptionsBachi(itemsBachi.map(item => item.nombreBachillerato));
+        setOptionsBachi(itemsBachi.map(item => item.universidadProveniente));
         setOptionsEspe(itemsEspe.map(item => item.carrera));
       } catch (error) {
         console.error('Error al obtener datos', error);
@@ -144,13 +145,13 @@ function RegistroPaso2({certificadoPDF, setCertificadoPDF, empAcademica, setEmpA
                     setEmpAcademica(prev => ({ ...prev, nombresBachillerato: newValue }));
                   }}
                   renderInput={(params) => (
-                    <TextField {...params} label="Nombre de tu bachillerato" variant="outlined" />
+                    <TextField {...params} label="Nombre de tu Universidad de procedencia" variant="outlined" />
                   )}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
               <TextField
-                label="Promedio Bachillerato"
+                label="Promedio optenido"
                 variant="outlined"
                 value={empAcademica.promedio} 
                 onChange={handleChangePromedio}
@@ -170,16 +171,16 @@ function RegistroPaso2({certificadoPDF, setCertificadoPDF, empAcademica, setEmpA
                     setEmpAcademica(prev => ({ ...prev, especialidadCursada: newValue }));
                   }}
                   renderInput={(params) => (
-                    <TextField {...params} label="Especialidad cursada" variant="outlined" />
+                    <TextField {...params} label="Area de especialicacion" variant="outlined" />
                   )}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Certificado de bachillerato"
+                  label="TituloUniversitario"
                   size="normal"
                   margin="normal"
-                  placeholder="Carga certificado de bachillerato"
+                  placeholder="Carga Titulo universitario"
                   value={certificadoPDF || ""}
                   InputProps={{
                     endAdornment: (
@@ -225,4 +226,4 @@ function RegistroPaso2({certificadoPDF, setCertificadoPDF, empAcademica, setEmpA
   );
 }
 
-export default RegistroPaso2;
+export default RegistroMaestriaPaso4;

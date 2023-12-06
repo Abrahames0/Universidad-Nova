@@ -66,14 +66,12 @@ const router = createBrowserRouter([
   },
 ]);
 
-
 // Componente principal App
 function App() {
   return (
     <ThemeProvider>
       <RouterProvider router={router} />
      <ThemeToggle /> 
-
     </ThemeProvider>
   );
 }

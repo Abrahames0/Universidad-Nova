@@ -4,9 +4,11 @@ import { schema } from './schema';
 
 
 
-const { CarreraAcursar, SeleccioCarrera, SeleccionableCiudad, SeleccionBachillerato, Padres, Domicilio, Estudiante } = initSchema(schema);
+const { ProgramaElegir, UniversidadProveniente, CarreraAcursar, SeleccioCarrera, SeleccionableCiudad, SeleccionBachillerato, Padres, Domicilio, Estudiante } = initSchema(schema);
 
 export {
+  ProgramaElegir,
+  UniversidadProveniente,
   CarreraAcursar,
   SeleccioCarrera,
   SeleccionableCiudad,

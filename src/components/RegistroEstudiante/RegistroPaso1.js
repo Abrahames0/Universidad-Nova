@@ -9,8 +9,6 @@ import { VisuallyHiddenInput } from "@chakra-ui/visually-hidden";
 
 function RegistroUsuarioInformacion({ imagenURL, setImagenURL, empContacto, setEmpContacto, setStep1Valid}) {
 
-  console.log(empContacto);
-
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');

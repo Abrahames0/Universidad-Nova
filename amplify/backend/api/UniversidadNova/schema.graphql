@@ -1,3 +1,13 @@
+type ProgramaElegir @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  programasMaestria: String
+}
+
+type UniversidadProveniente @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  universidadProveniente: String
+}
+
 type CarreraAcursar @model @auth(rules: [{allow: public}]) {
   id: ID!
   carreraAcursar: String
@@ -23,7 +33,6 @@ type Padres @model @auth(rules: [{allow: public}]) {
   nombreMa: String
   apellidoPaternoMa: String
   apellidoMaternoMa: String
-  Estudiante: Estudiante @hasOne
   telefonoMa: String
   nombrePa: String
   apellidoPaternoPa: String
@@ -58,5 +67,7 @@ type Estudiante @model @auth(rules: [{allow: public}]) {
   bachilleratoProcedencia: String
   especialidadProveniente: String
   carreraDeseada: String
+  queDeseasEstudiar: String
+  cartaIntencion: String
 }
  

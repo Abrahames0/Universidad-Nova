@@ -49,7 +49,7 @@ function VistaAlumnos() {
               <TableCell align="right">Apellido Materno</TableCell>
               <TableCell align="right">Teléfono</TableCell>
               <TableCell align="right">Correo</TableCell>
-              <TableCell align="right">Promedio Bachillerato</TableCell>
+              <TableCell align="right">Que Desea Estudiar</TableCell>
               <TableCell align="right">Acciones</TableCell>
             </TableRow>
           </TableHead>
@@ -66,7 +66,7 @@ function VistaAlumnos() {
                 <TableCell align="right">{alumno.apellidoMaterno}</TableCell>
                 <TableCell align="right">{alumno.telefonoJoven}</TableCell>
                 <TableCell align="right">{alumno.correo}</TableCell>
-                <TableCell align="right">{alumno.promedioBachillerato}</TableCell>
+                <TableCell align="right">{alumno.queDeseasEstudiar}</TableCell> 
                 <TableCell align="right">
                   <Tooltip title="Eliminar">
                     <IconButton onClick={() => handleDeleteClick(alumno.id)}>

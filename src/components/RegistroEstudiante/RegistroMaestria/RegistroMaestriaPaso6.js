@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { DataStore } from "aws-amplify";
-import { CarreraAcursar } from "../../models";
+import { ProgramaElegir } from "../../../models";
 import { TextField, Card, Autocomplete, Grid, Box } from "@mui/material";
 
-function RegistroPaso4({ empContacto, infAcademica, setInfAcademica , setStep4Valid}) {
+function RegistroMaestriaPaso6({ empContacto, infAcademica, setInfAcademica , setStep4Valid}) {
   const [optionsBachi, setOptionsBachi] = useState([]);
 
   useEffect(() => {
     const fetchOptions = async () => {
       try {
-        const items = await DataStore.query(CarreraAcursar);
-        setOptionsBachi(items.map(item => item.carreraAcursar));
+        const items = await DataStore.query(ProgramaElegir);
+        setOptionsBachi(items.map(item => item.programasMaestria));
       } catch (error) {
         console.error('Error al obtener datos', error);
       }
@@ -30,7 +30,7 @@ function RegistroPaso4({ empContacto, infAcademica, setInfAcademica , setStep4Va
     const nombre = empContacto?.nombres?.charAt(0).toUpperCase() ?? "";
     const mes = new Date().getMonth() + 1;
     const año = new Date().getFullYear().toString().slice(-2);
-    const matriculaGenerada = `${apellidoPaterno}${apellidoMaterno}${nombre}-${mes.toString().padStart(2, '0')}${año}`;
+    const matriculaGenerada = `M-${apellidoPaterno}${apellidoMaterno}${nombre}-${mes.toString().padStart(2, '0')}${año}`;
 
     setInfAcademica(prevState => ({
       ...prevState,
@@ -81,4 +81,4 @@ function RegistroPaso4({ empContacto, infAcademica, setInfAcademica , setStep4Va
   );
 }
 
-export default RegistroPaso4;
+export default RegistroMaestriaPaso6;
